@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+  <Vehicles.UpgradeTreeDef>
+    <defName>ColonialShuttle_UpgradeTree</defName>
+    <nodes>
+      <!-- MARK: ReinforcedAlloy -->
+      <li>
+        <key>ReinforcedAlloy</key>
+        <label>Reinforced alloy</label>
+        <description>\nHull components:\n+14% sharp armor\n+5% blunt armor\n+50 HP\n\n-100 cargo capacity</description>
+        <icon>UI/ColonialShuttle_Reinforced_Alloy</icon>
+        <work>40000</work>
+        <gridCoordinate>(2,2)</gridCoordinate>
+        <drawSize>(80,80)</drawSize>
+        <researchPrerequisites>
+          <li>Fabrication</li>
+        </researchPrerequisites>
+
+        <upgrades>
+          <li Class="Vehicles.StatUpgrade">
+            <vehicleStats>
+              <li>
+                <def>CargoCapacity</def>
+                <value>-100</value>
+                <type>Add</type>
+              </li>
+              <li>
+                <def>Mass</def>
+                <value>24</value>
+              </li>
+            </vehicleStats>
+          </li>
+          <li Class = "Vehicles.VehicleUpgrade">
+            <armor>
+              <li>
+                <key>HullFront</key>
+                <statModifiers>
+                  <ArmorRating_Sharp>0.14</ArmorRating_Sharp>
+                  <ArmorRating_Blunt>0.05</ArmorRating_Blunt>
+                </statModifiers>
+                <type>Add</type>
+              </li>
+              <li>
+                <key>HullRear</key>
+                <statModifiers>
+                  <ArmorRating_Sharp>0.14</ArmorRating_Sharp>
+                  <ArmorRating_Blunt>0.05</ArmorRating_Blunt>
+                </statModifiers>
+                <type>Add</type>
+              </li>
+              <li>
+                <key>HullLeft</key>
+                <statModifiers>
+                  <ArmorRating_Sharp>0.14</ArmorRating_Sharp>
+                  <ArmorRating_Blunt>0.05</ArmorRating_Blunt>
+                </statModifiers>
+                <type>Add</type>
+              </li>
+              <li>
+                <key>HullRight</key>
+                <statModifiers>
+                  <ArmorRating_Sharp>0.14</ArmorRating_Sharp>
+                  <ArmorRating_Blunt>0.05</ArmorRating_Blunt>
+                </statModifiers>
+                <type>Add</type>
+              </li>
+              <li>
+                <key>HullTop</key>
+                <statModifiers>
+                  <ArmorRating_Sharp>0.14</ArmorRating_Sharp>
+                  <ArmorRating_Blunt>0.05</ArmorRating_Blunt>
+                </statModifiers>
+                <type>Add</type>
+              </li>
+            </armor>
+            <health>
+              <li>
+                <key>HullFront</key>
+                <value>50</value>
+                <type>Add</type>
+              </li>
+              <li>
+                <key>HullRear</key>
+                <value>50</value>
+                <type>Add</type>
+              </li>
+              <li>
+                <key>HullLeft</key>
+                <value>50</value>
+                <type>Add</type>
+              </li>
+              <li>
+                <key>HullRight</key>
+                <value>50</value>
+                <type>Add</type>
+              </li>
+              <li>
+                <key>HullTop</key>
+                <value>50</value>
+                <type>Add</type>
+              </li>
+            </health>
+          </li>
+        </upgrades>
+        <ingredients>
+          <Plasteel>50</Plasteel>
+          <Uranium>10</Uranium>
+          <ComponentSpacer>2</ComponentSpacer>
+        </ingredients>
+      </li>
+      <!-- MARK: Turret -->
+      <li>
+        <key>Turret</key>
+        <label>Turret</label>
+        <description>\nA smoke turret mounted on the shuttle. The shell will release a cloud of smoke upon impact, obscuring incoming shots and preventing turrets from locking on. Requires steel to refurbish its barrel after use.\n\nUse single shots for precision, and bursts to quickly cover a general direction in smoke.\n\n-30 cargo capacity</description>
+        <icon>UI/ColonialShuttle_Turret_Smoke</icon>
+        <work>30000</work>
+        <gridCoordinate>(7, 2)</gridCoordinate>
+        <drawSize>(80,80)</drawSize>
+
+        <upgrades>
+          <li Class="Vehicles.TurretUpgrade">
+            <turrets>
+              <li>
+                <turretDef>ColonialShuttle_Turret_Smoke</turretDef>
+
+                <renderProperties>
+                  <north>(-0.4, 0.6)</north>
+                </renderProperties>
+                <drawLayer>3</drawLayer>
+
+                <gizmoLabel>Turret</gizmoLabel>
+
+                <angleRestricted />
+                <aimPieOffset>(0, -0.2)</aimPieOffset>
+
+                <key>turret_smoke</key>
+              </li>
+            </turrets>
+          </li>
+          <li Class="Vehicles.StatUpgrade">
+            <vehicleStats>
+              <li>
+                <def>CargoCapacity</def>
+                <value>-30</value>
+                <type>Add</type>
+              </li>
+              <li>
+                <def>Mass</def>
+                <value>30</value>
+                <type>Add</type>
+              </li>
+            </vehicleStats>
+          </li>
+        </upgrades>
+
+        <ingredients>
+          <Steel>110</Steel>
+          <ComponentIndustrial>6</ComponentIndustrial>
+        </ingredients>
+      </li>
+      <!-- MARK: On-board subpersona -->
+      <li MayRequire="Ludeon.RimWorld.Biotech">
+        <key>OnBoardSubpersona</key>
+        <label>On-board subpersona</label>
+        <description>\nInstall an on-board subpersona, allowing the shuttle to fly without dedicated pilots.\n\n&lt;color=#bb8f04&gt;Warning:&lt;/color&gt; refuelling a shuttle mid-trip requires passengers. AI is also incapable of trading.</description>
+        <icon>UI/ColonialShuttle_On_Board_Subpersona</icon>
+        <work>8000</work>
+        <gridCoordinate>(12,2)</gridCoordinate>
+        <drawSize>(80,80)</drawSize>
+
+        <upgrades>
+          <li Class="Vehicles.VehicleUpgrade">
+            <roles>
+              <li>
+                <key>pilot</key>
+                <remove>true</remove>
+              </li>
+              <li>
+                <key>passengerCockpit</key>
+                <label>Passenger (cockpit)</label>
+                <slots>2</slots>
+
+                <hitbox>
+                  <cells>
+                    <li>(2, 1)</li>
+                    <li>(2, -1)</li>
+                  </cells>
+                </hitbox>
+              </li>
+            </roles>
+          </li>
+        </upgrades>
+
+        <ingredients>
+          <SubcoreHigh>1</SubcoreHigh>
+        </ingredients>
+      </li>
+      <!-- MARK: Cargo racks (B) -->
+      <li>
+        <key>CargoRacksB</key>
+        <label>Cargo racks (B)</label>
+        <description>\nReplaces A. Half of the resources will be refunded.\n\n+250 cargo capacity\n+100% chemfuel consumption per kg carried</description>
+        <icon>UI/ColonialShuttle_Cargo_Racks_B</icon>
+        <work>1000</work>
+        <gridCoordinate>(12,7)</gridCoordinate>
+        <drawSize>(80,80)</drawSize>
+        <replaces>
+          <li>CargoRacksA</li>
+        </replaces>
+
+        <upgrades>
+          <li Class="Vehicles.StatUpgrade">
+            <vehicleStats>
+              <li>
+                <def>CargoCapacity</def>
+                <value>250</value>
+                <type>Add</type>
+              </li>
+            </vehicleStats>
+          </li>
+        </upgrades>
+        <ingredients>
+          <Steel>60</Steel>
+        </ingredients>
+      </li>
+      <!-- MARK: Cargo racks (A) -->
+      <li>
+        <key>CargoRacksA</key>
+        <label>Cargo racks (A)</label>
+        <description>\nReplaces B. Half of the resources will be refunded.\n\n+500 cargo capacity\n+200% chemfuel consumption per kg carried</description>
+        <icon>UI/ColonialShuttle_Cargo_Racks_A</icon>
+        <work>2000</work>
+        <gridCoordinate>(17,7)</gridCoordinate>
+        <drawSize>(80,80)</drawSize>
+        <replaces>
+          <li>CargoRacksB</li>
+        </replaces>
+
+        <upgrades>
+          <li Class="Vehicles.StatUpgrade">
+            <vehicleStats>
+              <li>
+                <def>CargoCapacity</def>
+                <value>500</value>
+                <type>Add</type>
+              </li>
+            </vehicleStats>
+          </li>
+        </upgrades>
+        <ingredients>
+          <Steel>120</Steel>
+        </ingredients>
+      </li>
+      <!-- MARK: Thrusters (C) -->
+      <li>
+        <key>ThrustersC</key>
+        <label>Thrusters (C)</label>
+        <description>\nReplaces B/A. Half of the resources will be refunded.\n\n+150 cargo capacity\n-50% chemfuel consumption per kg carried</description>
+        <icon>UI/ColonialShuttle_Thrusters_C</icon>
+        <work>10000</work>
+        <gridCoordinate>(7,12)</gridCoordinate>
+        <drawSize>(80,80)</drawSize>
+        <replaces>
+          <li>ThrustersB</li>
+          <li>ThrustersA</li>
+        </replaces>
+
+        <upgrades>
+          <li Class="Vehicles.StatUpgrade">
+            <vehicleStats>
+              <li>
+                <def>CargoCapacity</def>
+                <value>150</value>
+                <type>Add</type>
+              </li>
+            </vehicleStats>
+          </li>
+        </upgrades>
+        <ingredients>
+          <Steel>70</Steel>
+          <Plasteel>40</Plasteel>
+          <Uranium>10</Uranium>
+          <ComponentIndustrial>6</ComponentIndustrial>
+        </ingredients>
+      </li>
+      <!-- MARK: Thrusters (B) -->
+      <li>
+        <key>ThrustersB</key>
+        <label>Thrusters (B)</label>
+        <description>\nReplaces C/A. Half of the resources will be refunded.\n\n+250 cargo capacity\n-100% chemfuel consumption per kg carried</description>
+        <icon>UI/ColonialShuttle_Thrusters_B</icon>
+        <work>16000</work>
+        <gridCoordinate>(12,12)</gridCoordinate>
+        <drawSize>(80,80)</drawSize>
+        <researchPrerequisites>
+          <li>Fabrication</li>
+        </researchPrerequisites>
+        <replaces>
+          <li>ThrustersC</li>
+          <li>ThrustersA</li>
+        </replaces>
+
+        <upgrades>
+          <li Class="Vehicles.StatUpgrade">
+            <vehicleStats>
+              <li>
+                <def>CargoCapacity</def>
+                <value>250</value>
+                <type>Add</type>
+              </li>
+            </vehicleStats>
+          </li>
+        </upgrades>
+        <ingredients>
+          <Steel>110</Steel>
+          <Plasteel>60</Plasteel>
+          <Uranium>20</Uranium>
+          <ComponentIndustrial>12</ComponentIndustrial>
+        </ingredients>
+      </li>
+      <!-- MARK: Thrusters (A) -->
+      <li>
+        <key>ThrustersA</key>
+        <label>Thrusters (A)</label>
+        <description>\nReplaces C/B. Half of the resources will be refunded.\n\n+450 cargo capacity\n-200% chemfuel consumption per kg carried</description>
+        <icon>UI/ColonialShuttle_Thrusters_A</icon>
+        <work>24000</work>
+        <gridCoordinate>(17,12)</gridCoordinate>
+        <drawSize>(80,80)</drawSize>
+        <researchPrerequisites>
+          <li>AdvancedFabrication</li>
+        </researchPrerequisites>
+        <replaces>
+          <li>ThrustersC</li>
+          <li>ThrustersB</li>
+        </replaces>
+
+        <upgrades>
+          <li Class="Vehicles.StatUpgrade">
+            <vehicleStats>
+              <li>
+                <def>CargoCapacity</def>
+                <value>450</value>
+                <type>Add</type>
+              </li>
+            </vehicleStats>
+          </li>
+        </upgrades>
+        <ingredients>
+          <Steel>170</Steel>
+          <Plasteel>90</Plasteel>
+          <Uranium>40</Uranium>
+          <ComponentSpacer>4</ComponentSpacer>
+        </ingredients>
+      </li>
+      <!-- MARK: Passenger cabin (D) -->
+      <li>
+        <key>PassengerCabinD</key>
+        <label>Passenger cabin (D)</label>
+        <description>\nReplaces C/B/A. Half of the resources will be refunded.\n\n+2 passengers\n-190 cargo capacity</description>
+        <icon>UI/ColonialShuttle_Passenger_Cabin_D</icon>
+        <work>1600</work>
+        <gridCoordinate>(2,17)</gridCoordinate>
+        <drawSize>(80,80)</drawSize>
+        <replaces>
+          <li>PassengerCabinC</li>
+          <li>PassengerCabinB</li>
+          <li>PassengerCabinA</li>
+        </replaces>
+
+        <upgrades>
+          <li Class="Vehicles.VehicleUpgrade">
+            <roles>
+              <li>
+                <key>passenger</key>
+                <editKey>passengerD</editKey>
+                <label>Passenger</label>
+                <slots>2</slots>
+                <hitbox>
+                  <cells>
+                    <li>(0, 0)</li>
+                    <li>(-1, 0)</li>
+                  </cells>
+                </hitbox>
+              </li>
+            </roles>
+          </li>
+          <li Class="Vehicles.StatUpgrade">
+            <vehicleStats>
+              <li>
+                <def>CargoCapacity</def>
+                <value>-190</value>
+                <type>Add</type>
+              </li>
+            </vehicleStats>
+          </li>
+        </upgrades>
+
+        <ingredients>
+          <Steel>140</Steel>
+        </ingredients>
+      </li>
+      <!-- MARK: Passenger cabin (C) -->
+      <li>
+        <key>PassengerCabinC</key>
+        <label>Passenger cabin (C)</label>
+        <description>\nReplaces D/B/A. Half of the resources will be refunded.\n\n+4 passengers\n-380 cargo capacity</description>
+        <icon>UI/ColonialShuttle_Passenger_Cabin_C</icon>
+        <work>3200</work>
+        <gridCoordinate>(7,17)</gridCoordinate>
+        <drawSize>(80,80)</drawSize>
+        <replaces>
+          <li>PassengerCabinD</li>
+          <li>PassengerCabinB</li>
+          <li>PassengerCabinA</li>
+        </replaces>
+
+        <upgrades>
+          <li Class="Vehicles.VehicleUpgrade">
+            <roles>
+              <li>
+                <key>passenger</key>
+                <editKey>passengerC</editKey>
+                <label>Passenger</label>
+                <slots>4</slots>
+                <hitbox>
+                  <cells>
+                    <li>(0, 0)</li>
+                    <li>(-1, 0)</li>
+                    <li>(0, 1)</li>
+                    <li>(0, -1)</li>
+                  </cells>
+                </hitbox>
+              </li>
+            </roles>
+          </li>
+          <li Class="Vehicles.StatUpgrade">
+            <vehicleStats>
+              <li>
+                <def>CargoCapacity</def>
+                <value>-380</value>
+                <type>Add</type>
+              </li>
+            </vehicleStats>
+          </li>
+        </upgrades>
+
+        <ingredients>
+          <Steel>270</Steel>
+        </ingredients>
+      </li>
+      <!-- MARK: Passenger cabin (B) -->
+      <li>
+        <key>PassengerCabinB</key>
+        <label>Passenger cabin (B)</label>
+        <description>\nReplaces D/C/A. Half of the resources will be refunded.\n\n+6 passengers\n-570 cargo capacity</description>
+        <icon>UI/ColonialShuttle_Passenger_Cabin_B</icon>
+        <work>4800</work>
+        <gridCoordinate>(12,17)</gridCoordinate>
+        <drawSize>(80,80)</drawSize>
+        <replaces>
+          <li>PassengerCabinD</li>
+          <li>PassengerCabinC</li>
+          <li>PassengerCabinA</li>
+        </replaces>
+
+        <upgrades>
+          <li Class="Vehicles.VehicleUpgrade">
+            <roles>
+              <li>
+                <key>passenger</key>
+                <editKey>passengerB</editKey>
+                <label>Passenger</label>
+                <slots>6</slots>
+                <hitbox>
+                  <cells>
+                    <li>(0, 0)</li>
+                    <li>(-1, 0)</li>
+                    <li>(0, 1)</li>
+                    <li>(0, -1)</li>
+                    <li>(-1, 1)</li>
+                    <li>(-1, -1)</li>
+                  </cells>
+                </hitbox>
+              </li>
+            </roles>
+          </li>
+          <li Class="Vehicles.StatUpgrade">
+            <vehicleStats>
+              <li>
+                <def>CargoCapacity</def>
+                <value>-570</value>
+                <type>Add</type>
+              </li>
+            </vehicleStats>
+          </li>
+        </upgrades>
+
+        <ingredients>
+          <Steel>400</Steel>
+        </ingredients>
+      </li>
+      <!-- MARK: Passenger cabin (A) -->
+      <li>
+        <key>PassengerCabinA</key>
+        <label>Passenger cabin (A)</label>
+        <description>\nReplaces D/C/B. Half of the resources will be refunded.\n\n+8 passengers\n-760 cargo capacity</description>
+        <icon>UI/ColonialShuttle_Passenger_Cabin_A</icon>
+        <work>6400</work>
+        <gridCoordinate>(17,17)</gridCoordinate>
+        <drawSize>(80,80)</drawSize>
+        <replaces>
+          <li>PassengerCabinD</li>
+          <li>PassengerCabinC</li>
+          <li>PassengerCabinB</li>
+        </replaces>
+
+        <upgrades>
+          <li Class="Vehicles.VehicleUpgrade">
+            <roles>
+              <li>
+                <key>passenger</key>
+                <editKey>passengerA</editKey>
+                <label>Passenger</label>
+                <slots>8</slots>
+                <hitbox>
+                  <cells>
+                    <li>(0, 0)</li>
+                    <li>(-1, 0)</li>
+                    <li>(0, 1)</li>
+                    <li>(0, -1)</li>
+                    <li>(-1, 1)</li>
+                    <li>(-1, -1)</li>
+                    <li>(-2, 0)</li>
+                    <li>(-2, -1)</li>
+                  </cells>
+                </hitbox>
+              </li>
+            </roles>
+          </li>
+          <li Class="Vehicles.StatUpgrade">
+            <vehicleStats>
+              <li>
+                <def>CargoCapacity</def>
+                <value>-760</value>
+                <type>Add</type>
+              </li>
+            </vehicleStats>
+          </li>
+        </upgrades>
+
+        <ingredients>
+          <Steel>540</Steel>
+        </ingredients>
+      </li>
+    </nodes>
+  </Vehicles.UpgradeTreeDef>
+</Defs>

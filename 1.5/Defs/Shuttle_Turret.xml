@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Defs>
+  <Vehicles.VehicleTurretDef ParentName="VehicleTurretBase">
+    <defName>ColonialShuttle_Turret_Smoke</defName>
+    <label>smoke turret</label>
+    <description>A smoke turret mounted on the shuttle. The shell will release a cloud of smoke upon impact, obscuring incoming shots and preventing turrets from locking on. Requires steel to refurbish its barrel after use.\n\nUse single shots for precision, and bursts to quickly cover a general direction in smoke.</description>
+
+    <turretType>Rotatable</turretType>
+    <shotSound>Shot_IncendiaryLauncher</shotSound>
+
+    <projectile>Bullet_SmokeLauncher</projectile>
+    <!-- Cooldown after reloading, ~140% of warmUpTimer feels correct: -->
+    <reloadTimer>4.9</reloadTimer>
+    <!-- warmupTime: -->
+    <warmUpTimer>3.5</warmUpTimer>
+
+    <chargePerAmmoCount>10</chargePerAmmoCount>
+    <magazineCapacity>6</magazineCapacity>
+    <genericAmmo>true</genericAmmo>
+
+    <hitFlags>IntendedTarget</hitFlags>
+
+    <autoSnapTargeting>false</autoSnapTargeting>
+    <rotationSpeed>1.6</rotationSpeed>
+
+    <projectileOffset>1</projectileOffset>
+
+    <minRange>4.9</minRange>
+    <maxRange>32.9</maxRange>
+
+    <fireModes>
+      <li>
+        <shotsPerBurst>1</shotsPerBurst>
+        <ticksBetweenShots>10</ticksBetweenShots>
+        <ticksBetweenBursts>120</ticksBetweenBursts>
+        <spreadRadius>3.9</spreadRadius>
+        <label>Single</label>
+        <texPath>UI/Gizmos/FireRate_Single</texPath>
+      </li>
+      <li>
+        <!-- burstShotCount: -->
+        <shotsPerBurst>3</shotsPerBurst>
+        <!-- ticksBetweenBurstShots: -->
+        <ticksBetweenShots>10</ticksBetweenShots>
+        <!-- RangedWeapon_Cooldown: -->
+        <ticksBetweenBursts>120</ticksBetweenBursts>
+        <spreadRadius>8.9</spreadRadius>
+        <label>Burst</label>
+        <texPath>UI/Gizmos/FireRate_Burst</texPath>
+      </li>
+    </fireModes>
+
+    <gizmoIconTexPath>ColonialShuttle_Turret_Smoke_Gizmo</gizmoIconTexPath>
+
+    <graphicData>
+      <texPath>ColonialShuttle_Turret_Smoke_Body</texPath>
+      <graphicClass>Vehicles.Graphic_Turret</graphicClass>
+      <shaderType>Cutout</shaderType>
+      <drawSize>(1,1)</drawSize>
+      <layer>1</layer>
+    </graphicData>
+
+    <graphics>
+      <li>
+        <recoil>
+          <distanceTotal>0.06</distanceTotal>
+          <distancePerTick>0.02</distancePerTick>
+          <speedMultiplierPostRecoil>0.15</speedMultiplierPostRecoil>
+        </recoil>
+        <graphicData>
+          <texPath>ColonialShuttle_Turret_Smoke_Barrel</texPath>
+          <graphicClass>Vehicles.Graphic_Turret</graphicClass>
+          <shaderType>Cutout</shaderType>
+          <drawSize>(1,1)</drawSize>
+        </graphicData>
+      </li>
+    </graphics>
+
+    <ammunition>
+      <thingDefs>
+        <li>Steel</li>
+      </thingDefs>
+    </ammunition>
+  </Vehicles.VehicleTurretDef>
+</Defs>

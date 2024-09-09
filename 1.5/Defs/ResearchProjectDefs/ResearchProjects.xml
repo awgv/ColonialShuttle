@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+  <ResearchProjectDef>
+    <defName>ColonialShuttleResearch</defName>
+    <label>powered flight</label>
+    <description>Build a variant of an imperial shuttle powered by an internal combustion engine that can quickly transport colonists, items and animals anywhere you like—as long as you have enough chemfuel.</description>
+    <baseCost>1500</baseCost>
+    <techprintCount>1</techprintCount>
+    <techprintCommonality>1</techprintCommonality>
+    <techprintMarketValue>4000</techprintMarketValue>
+    <heldByFactionCategoryTags>
+      <li>Empire</li>
+    </heldByFactionCategoryTags>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>TransportPod</li>
+    </prerequisites>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>0.00</researchViewY>
+    <tab>ColonialShuttleTab</tab>
+    <!--
+      Do not need generalRules->rulesStrings, because the game doesn’t generate
+      schematics for projects that are locked behind techprints.
+    -->
+  </ResearchProjectDef>
+</Defs>

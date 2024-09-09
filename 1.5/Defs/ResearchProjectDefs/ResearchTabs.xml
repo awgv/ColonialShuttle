@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+  <ResearchTabDef>
+    <defName>ColonialShuttleTab</defName>
+    <label>Colonial Shuttle</label>
+    <generalTitle>Modded research projects</generalTitle>
+  </ResearchTabDef>
+</Defs>
