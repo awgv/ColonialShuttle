@@ -160,6 +160,38 @@
           <ComponentIndustrial>6</ComponentIndustrial>
         </ingredients>
       </li>
+      <!-- MARK: Chemfuel tank (A) -->
+      <li>
+        <key>ChemfuelTankA</key>
+        <label>Chemfuel tank (A)</label>
+        <description>\n+260 chemfuel capacity\n-14 cargo capacity</description>
+        <icon>UI/ColonialShuttle_Chemfuel_Tank_A</icon>
+        <work>1000</work>
+        <gridCoordinate>(12,2)</gridCoordinate>
+        <drawSize>(80,80)</drawSize>
+
+        <upgrades>
+          <li Class="Vehicles.StatUpgrade">
+            <statCategories>
+              <li>
+                <def>FuelCapacity</def>
+                <value>260</value>
+              </li>
+            </statCategories>
+            <vehicleStats>
+              <li>
+                <def>CargoCapacity</def>
+                <value>-14</value>
+                <type>Add</type>
+              </li>
+            </vehicleStats>
+          </li>
+        </upgrades>
+
+        <ingredients>
+          <Steel>80</Steel>
+        </ingredients>
+      </li>
       <!-- MARK: On-board subpersona -->
       <li MayRequire="Ludeon.RimWorld.Biotech">
         <key>OnBoardSubpersona</key>
@@ -167,7 +199,7 @@
         <description>\nInstall an on-board subpersona, allowing the shuttle to fly without dedicated pilots.\n\n&lt;color=#bb8f04&gt;Warning:&lt;/color&gt; refuelling a shuttle mid-trip requires passengers. AI is also incapable of trading.</description>
         <icon>UI/ColonialShuttle_On_Board_Subpersona</icon>
         <work>8000</work>
-        <gridCoordinate>(12,2)</gridCoordinate>
+        <gridCoordinate>(17,2)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
 
         <upgrades>
@@ -289,7 +321,7 @@
       <li>
         <key>ThrustersB</key>
         <label>Thrusters (B)</label>
-        <description>\nReplaces C/A. Half of the resources will be refunded.\n\n+250 cargo capacity\n-100% chemfuel consumption per kg carried</description>
+        <description>\nReplaces C/A. Half of the resources will be refunded.\n\n+260 cargo capacity\n-100% chemfuel consumption per kg carried</description>
         <icon>UI/ColonialShuttle_Thrusters_B</icon>
         <work>16000</work>
         <gridCoordinate>(12,12)</gridCoordinate>
@@ -307,7 +339,7 @@
             <vehicleStats>
               <li>
                 <def>CargoCapacity</def>
-                <value>250</value>
+                <value>260</value>
                 <type>Add</type>
               </li>
             </vehicleStats>
@@ -324,7 +356,7 @@
       <li>
         <key>ThrustersA</key>
         <label>Thrusters (A)</label>
-        <description>\nReplaces C/B. Half of the resources will be refunded.\n\n+450 cargo capacity\n-200% chemfuel consumption per kg carried</description>
+        <description>\nReplaces C/B. Half of the resources will be refunded.\n\n+470 cargo capacity\n-200% chemfuel consumption per kg carried</description>
         <icon>UI/ColonialShuttle_Thrusters_A</icon>
         <work>24000</work>
         <gridCoordinate>(17,12)</gridCoordinate>
@@ -342,7 +374,7 @@
             <vehicleStats>
               <li>
                 <def>CargoCapacity</def>
-                <value>450</value>
+                <value>470</value>
                 <type>Add</type>
               </li>
             </vehicleStats>

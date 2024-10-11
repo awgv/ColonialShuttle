@@ -436,7 +436,7 @@
           is completely irrelevant.
         -->
         <fuelConsumptionRate>1012.5</fuelConsumptionRate>
-        <fuelCapacity>225</fuelCapacity>
+        <fuelCapacity>260</fuelCapacity>
       </li>
       <li Class="Vehicles.CompProperties_UpgradeTree">
         <def>ColonialShuttle_UpgradeTree</def>
