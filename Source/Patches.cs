@@ -11,7 +11,12 @@ namespace ColonialShuttle
     {
         internal const string colonialShuttleDefName = "ColonialShuttle";
 
-        internal const float fuelConsumptionRateMultiplier = 1.5f;
+        /// <summary>
+        /// It doesn’t affect the overall “there and back again” fuel
+        /// consumption directly, i.e. 1.5 is not a 50% increase, more like
+        /// ~30%. It was initially 1.5.
+        /// </summary>
+        internal const float fuelConsumptionRateMultiplier = 1.39f;
 
         /// <summary>
         /// Transport pods spend 4.54f per kg.
