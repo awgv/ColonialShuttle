@@ -233,7 +233,7 @@
       <li>
         <key>CargoRacksB</key>
         <label>Cargo racks (B)</label>
-        <description>\nReplaces A. Half of the resources will be refunded.\n\n+250 cargo capacity\n+100% chemfuel consumption per kg carried</description>
+        <description>\nReplaces A. Half of the resources will be refunded.\n\n+250 cargo capacity\n+25% chemfuel consumption per kg carried</description>
         <icon>UI/ColonialShuttle_Cargo_Racks_B</icon>
         <work>1000</work>
         <gridCoordinate>(12,7)</gridCoordinate>
@@ -261,7 +261,7 @@
       <li>
         <key>CargoRacksA</key>
         <label>Cargo racks (A)</label>
-        <description>\nReplaces B. Half of the resources will be refunded.\n\n+500 cargo capacity\n+200% chemfuel consumption per kg carried</description>
+        <description>\nReplaces B. Half of the resources will be refunded.\n\n+500 cargo capacity\n+50% chemfuel consumption per kg carried</description>
         <icon>UI/ColonialShuttle_Cargo_Racks_A</icon>
         <work>2000</work>
         <gridCoordinate>(17,7)</gridCoordinate>
@@ -289,7 +289,7 @@
       <li>
         <key>ThrustersC</key>
         <label>Thrusters (C)</label>
-        <description>\nReplaces B/A. Half of the resources will be refunded.\n\n+150 cargo capacity\n-50% chemfuel consumption per kg carried</description>
+        <description>\nReplaces B/A. Half of the resources will be refunded.\n\n+150 cargo capacity\n-12.5% chemfuel consumption per kg carried</description>
         <icon>UI/ColonialShuttle_Thrusters_C</icon>
         <work>10000</work>
         <gridCoordinate>(7,12)</gridCoordinate>
@@ -321,7 +321,7 @@
       <li>
         <key>ThrustersB</key>
         <label>Thrusters (B)</label>
-        <description>\nReplaces C/A. Half of the resources will be refunded.\n\n+260 cargo capacity\n-100% chemfuel consumption per kg carried</description>
+        <description>\nReplaces C/A. Half of the resources will be refunded.\n\n+260 cargo capacity\n-25% chemfuel consumption per kg carried</description>
         <icon>UI/ColonialShuttle_Thrusters_B</icon>
         <work>16000</work>
         <gridCoordinate>(12,12)</gridCoordinate>
@@ -356,7 +356,7 @@
       <li>
         <key>ThrustersA</key>
         <label>Thrusters (A)</label>
-        <description>\nReplaces C/B. Half of the resources will be refunded.\n\n+470 cargo capacity\n-200% chemfuel consumption per kg carried</description>
+        <description>\nReplaces C/B. Half of the resources will be refunded.\n\n+470 cargo capacity\n-50% chemfuel consumption per kg carried</description>
         <icon>UI/ColonialShuttle_Thrusters_A</icon>
         <work>24000</work>
         <gridCoordinate>(17,12)</gridCoordinate>

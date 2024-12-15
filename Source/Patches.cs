@@ -19,22 +19,20 @@ namespace ColonialShuttle
         internal const float fuelConsumptionRatePerKilogram = 4.54f * fuelConsumptionRateMultiplier;
 
         /// <summary>
-        /// Dictionary keys are keys of upgrade nodes.
+        /// Dictionary keys are the keys of upgrade nodes. These are essentially
+        /// percentages of `fuelConsumptionRatePerKilogram`, so make sure that
+        /// no combination of upgrades allow `fuelConsumptionRatePerKilogram` to
+        /// become <= zero, because it’s going to be reset to the default value.
         /// </summary>
         internal static Dictionary<string, float> fuelConsumptionRateMultipliersForUpgrades =
             new Dictionary<string, float>()
             {
-                { "CargoRacksB", 1f },
-                { "CargoRacksA", 2f },
-                { "ThrustersC", -0.5f },
-                { "ThrustersB", -1f },
-                { "ThrustersA", -2f },
+                { "CargoRacksB", 0.25f },
+                { "CargoRacksA", 0.5f },
+                { "ThrustersC", -0.125f },
+                { "ThrustersB", -0.25f },
+                { "ThrustersA", -0.5f },
             };
-
-        /// <summary>
-        /// Transport pods spend 2.25 chemfuel per tile or 675f.
-        /// </summary>
-        internal const float minimumFuelConsumptionRate = 675f * fuelConsumptionRateMultiplier;
     }
 
     [StaticConstructorOnStartup]
@@ -108,6 +106,12 @@ namespace ColonialShuttle
                 }
             }
 
+            if (fuelConsumptionRatePerKilogramAfterUpgrades <= 0)
+            {
+                fuelConsumptionRatePerKilogramAfterUpgrades =
+                    Defaults.fuelConsumptionRatePerKilogram;
+            }
+
             float totalWeightOfCargoInKilograms = MassUtility.InventoryMass(__instance.Vehicle);
 
             foreach (var pawn in __instance.Vehicle.AllPawnsAboard)
@@ -117,9 +121,8 @@ namespace ColonialShuttle
 
             float fuelConsumptionRate =
                 totalWeightOfCargoInKilograms * fuelConsumptionRatePerKilogramAfterUpgrades;
-            return fuelConsumptionRate <= Defaults.minimumFuelConsumptionRate
-                ? Defaults.minimumFuelConsumptionRate
-                : fuelConsumptionRate;
+
+            return fuelConsumptionRate;
         }
     }
 }
