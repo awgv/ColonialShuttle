@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
 using SmashTools;
@@ -14,7 +14,7 @@ namespace ColonialShuttle
         /// <summary>
         /// It doesn’t affect the overall “there and back again” fuel
         /// consumption directly, i.e. 1.5 is not a 50% increase, more like
-        /// ~30%. It was initially 1.5.
+        /// ~30%. It was initially 1.5f.
         /// </summary>
         internal const float fuelConsumptionRateMultiplier = 1.39f;
 
