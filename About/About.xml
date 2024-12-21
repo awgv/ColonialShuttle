@@ -3,15 +3,11 @@
   <packageId>awgv.ColonialShuttle</packageId>
   <name>Colonial Shuttle</name>
   <author>J</author>
-  <modVersion>1.1.2</modVersion>
+  <modVersion>1.1.3</modVersion>
   <supportedVersions>
     <li>1.5</li>
   </supportedVersions>
   <modDependencies>
-    <li>
-      <packageId>Ludeon.RimWorld.Royalty</packageId>
-      <displayName>Royalty [Official DLC]</displayName>
-    </li>
     <li>
       <packageId>SmashPhil.VehicleFramework</packageId>
       <displayName>Vehicle Framework</displayName>
