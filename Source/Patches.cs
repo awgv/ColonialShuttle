@@ -38,6 +38,11 @@ namespace ColonialShuttle
                 { "ThrustersB", -0.25f },
                 { "ThrustersA", -0.5f },
             };
+
+        /// <summary>
+        /// Transport pods spend 2.25 chemfuel per tile or 675f. Used when shuttles carry no cargo.
+        /// </summary>
+        internal const float minimumFuelConsumptionRate = 338f;
     }
 
     [StaticConstructorOnStartup]
@@ -125,7 +130,9 @@ namespace ColonialShuttle
             }
 
             float fuelConsumptionRate =
-                totalWeightOfCargoInKilograms * fuelConsumptionRatePerKilogramAfterUpgrades;
+                totalWeightOfCargoInKilograms == 0
+                    ? Defaults.minimumFuelConsumptionRate
+                    : totalWeightOfCargoInKilograms * fuelConsumptionRatePerKilogramAfterUpgrades;
 
             return fuelConsumptionRate;
         }
