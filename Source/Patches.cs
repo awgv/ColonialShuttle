@@ -2,7 +2,6 @@ using HarmonyLib;
 using RimWorld;
 using SmashTools;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Vehicles;
 using Verse;
@@ -77,7 +76,7 @@ namespace ColonialShuttle
                         "Gunsmithing"
                     ),
                     AmmunitionDef = DefDatabase<ThingDef>.GetNamed("Chemfuel"),
-                    ChargePerAmmoCount = 10,
+                    ChargePerAmmoCount = 15,
                     SpreadRadius = 1.9f,
                 },
                 new ProjectileDataCached()
@@ -88,8 +87,8 @@ namespace ColonialShuttle
                         "Gunsmithing"
                     ),
                     AmmunitionDef = DefDatabase<ThingDef>.GetNamed("Chemfuel"),
-                    ChargePerAmmoCount = 10,
-                    SpreadRadius = 8.9f,
+                    ChargePerAmmoCount = 15,
+                    SpreadRadius = 9.9f,
                 },
                 new ProjectileDataCached()
                 {
@@ -99,8 +98,8 @@ namespace ColonialShuttle
                         "MicroelectronicsBasics"
                     ),
                     AmmunitionDef = DefDatabase<ThingDef>.GetNamed("Steel"),
-                    ChargePerAmmoCount = 20,
-                    SpreadRadius = 1.9f,
+                    ChargePerAmmoCount = 25,
+                    SpreadRadius = 2.9f,
                 },
                 new ProjectileDataCached()
                 {
@@ -108,8 +107,8 @@ namespace ColonialShuttle
                     TranslatedLabel = "ColonialShuttle_ToxLauncher".Translate(),
                     ResearchPrerequisiteDef = DefDatabase<ResearchProjectDef>.GetNamed("ToxGas"),
                     AmmunitionDef = DefDatabase<ThingDef>.GetNamed("Chemfuel"),
-                    ChargePerAmmoCount = 15,
-                    SpreadRadius = 8.9f,
+                    ChargePerAmmoCount = 25,
+                    SpreadRadius = 9.9f,
                 },
                 new ProjectileDataCached()
                 {
@@ -119,8 +118,8 @@ namespace ColonialShuttle
                     TranslatedLabel = "ColonialShuttle_FirefoamLauncher".Translate(),
                     ResearchPrerequisiteDef = DefDatabase<ResearchProjectDef>.GetNamed("Firefoam"),
                     AmmunitionDef = DefDatabase<ThingDef>.GetNamed("Chemfuel"),
-                    ChargePerAmmoCount = 10,
-                    SpreadRadius = 6.9f,
+                    ChargePerAmmoCount = 15,
+                    SpreadRadius = 7.9f,
                 },
             };
 
@@ -228,35 +227,6 @@ namespace ColonialShuttle
 
     // MARK: Ammo handling:
 
-    // <summary>
-    // This is a bug fix for the Vehicle Framework that should be removed once fixed upstream.
-    //
-    // If a vehicle can launch like transport pods, its turrets do not resume ticking on
-    // landing, so ammo reloading gets paused.
-    // </summary>
-    [HarmonyPatch(typeof(CompVehicleTurrets), nameof(CompVehicleTurrets.PostSpawnSetup))]
-    class PostSpawnSetupPatch
-    {
-        static void Postfix(CompVehicleTurrets __instance, bool respawningAfterLoad)
-        {
-            // In case of destructive side effects, it’s probably better to keep the fix local:
-            if (__instance.Vehicle.def.defName != Defaults.colonialShuttleDefName)
-            {
-                return;
-            }
-
-            foreach (VehicleTurret turret in __instance.turrets)
-            {
-                if (respawningAfterLoad)
-                {
-                    continue;
-                }
-
-                turret.StartTicking();
-            }
-        }
-    }
-
     [HarmonyPatch(typeof(VehicleTurret), nameof(VehicleTurret.SubGizmo_ReloadFromInventory))]
     class SubGizmo_ReloadFromInventoryPatch
     {
@@ -282,37 +252,11 @@ namespace ColonialShuttle
                 },
                 onClick = delegate()
                 {
-                    if (turret.ReloadTicks > 0)
-                    {
-                        Messages.Message(
-                            "ColonialShuttle_LauncherIsReloading".Translate(),
-                            MessageTypeDefOf.RejectInput
-                        );
-                        return;
-                    }
-
-                    if (
-                        HarmonyPatcher.cachedDataOfPossibleProjectiles
-                            .Where(projectile => projectile.ResearchPrerequisiteDef.IsFinished)
-                            .NullOrEmpty()
-                    )
-                    {
-                        Messages.Message(
-                            "ColonialShuttle_NoResearchedGrenades".Translate(),
-                            MessageTypeDefOf.RejectInput
-                        );
-                        return;
-                    }
-
                     List<FloatMenuOption> options = new List<FloatMenuOption>();
 
                     foreach (var projectile in HarmonyPatcher.cachedDataOfPossibleProjectiles)
                     {
-                        if (
-                            projectile.ProjectileDef == null
-                            || projectile.ResearchPrerequisiteDef == null
-                            || !projectile.ResearchPrerequisiteDef.IsFinished
-                        )
+                        if (!projectile.ResearchPrerequisiteDef.IsFinished)
                         {
                             continue;
                         }
@@ -321,8 +265,10 @@ namespace ColonialShuttle
 
                         if (turret.turretDef.projectile == projectile.ProjectileDef)
                         {
-                            // An en dash surrounded by thin spaces:
-                            label += " – " + "ColonialShuttle_SelectedGrenadeIndicator".Translate();
+                            label +=
+                                " ("
+                                + "ColonialShuttle_Indicator_Of_Selected_Grenade".Translate()
+                                + ")";
                         }
 
                         options.Add(
@@ -331,53 +277,26 @@ namespace ColonialShuttle
                                 delegate()
                                 {
                                     if (
-                                        turret.turretDef.projectile == projectile.ProjectileDef
-                                        && turret.shellCount == turret.turretDef.magazineCapacity
+                                        turret.shellCount == turret.turretDef.magazineCapacity
+                                        && turret.turretDef.projectile == projectile.ProjectileDef
                                     )
                                     {
-                                        return;
-                                    }
-
-                                    if (
-                                        turret.vehicle.inventory.innerContainer
-                                            .Where(
-                                                stack =>
-                                                    stack.def.defName
-                                                    == projectile.AmmunitionDef.defName
-                                            )
-                                            .Sum(stack => stack.stackCount)
-                                        < projectile.ChargePerAmmoCount
-                                    )
-                                    {
-                                        Messages.Message(
-                                            "VF_NoAmmoAvailable".Translate(),
-                                            MessageTypeDefOf.RejectInput
-                                        );
                                         return;
                                     }
 
                                     turret.turretDef.projectile = projectile.ProjectileDef;
-                                    turret.turretDef.ammunition.SetDisallowAll();
-                                    turret.turretDef.ammunition.SetAllow(
-                                        projectile.AmmunitionDef,
-                                        true
-                                    );
-                                    turret.turretDef.fireModes
-                                        .Where(fireMode => fireMode.shotsPerBurst == 3)
-                                        .FirstOrDefault()
-                                        .spreadRadius = projectile.SpreadRadius;
-
-                                    HarmonyPatcher.chargePerAmmoCountToSetAfterUnloading =
-                                        projectile.ChargePerAmmoCount;
-                                    turret.savedAmmoType = null;
-
-                                    turret.ReloadCannon(
-                                        turret.turretDef.ammunition.AllowedThingDefs.FirstOrDefault(),
-                                        turret.vehicle.inventory.innerContainer.Contains(
-                                            turret.turretDef.ammunition.AllowedThingDefs.FirstOrDefault()
-                                        )
-                                    );
+                                    turret.ReloadCannon();
                                 }
+                            )
+                        );
+                    }
+
+                    if (options.Count == 0)
+                    {
+                        options.Add(
+                            new FloatMenuOption(
+                                "ColonialShuttle_No_Grenades_To_Choose_From".Translate(),
+                                delegate() { }
                             )
                         );
                     }
@@ -388,64 +307,59 @@ namespace ColonialShuttle
             };
             return false;
         }
-    }
 
-    [HarmonyPatch(typeof(VehicleTurret), nameof(VehicleTurret.TryRemoveShell))]
-    class TryRemoveShellPatch
-    {
-        /// <summary>
-        /// When a different ammo type is selected, loaded ammo gets converted into a resource and
-        /// inserted back into the inventory. If we set `chargePerAmmoCount` before `TryRemoveShell`
-        /// — executed as a part of `VehicleTurret.ReloadInternal` — loaded ammo uses the
-        /// `chargePerAmmoCount` of the ammo type that’s selected in `SubGizmo_ReloadFromInventory`,
-        /// and not the one currently selected.
-        ///
-        /// For example, the `magazineCapacity` is 2, `chargePerAmmoCount` of the ammo type A
-        /// (currently selected) is 10 and `chargePerAmmoCount` of the ammo type B is 5. If we
-        /// select B, A will return 5 * 2 back into the inventory instead of 10 * 2 — hence this
-        /// patch.
-        /// </summary>
-        static void Postfix(VehicleTurret __instance)
+        [HarmonyPatch(typeof(VehicleTurret), nameof(VehicleTurret.ReloadCannon))]
+        class ReloadCannonPatch
         {
-            if (
-                __instance.vehicleDef.defName != Defaults.colonialShuttleDefName
-                || HarmonyPatcher.combatExtendedIsLoaded
-            )
+            static bool Prefix(VehicleTurret __instance)
             {
-                return;
-            }
-
-            __instance.turretDef.chargePerAmmoCount =
-                HarmonyPatcher.chargePerAmmoCountToSetAfterUnloading;
-        }
-    }
-
-    [HarmonyPatch(typeof(VehicleTurret), nameof(VehicleTurret.ActivateTimer))]
-    class ActivateTimerPatch
-    {
-        static bool Prefix(VehicleTurret __instance, bool ignoreTimer)
-        {
-            if (
-                __instance.vehicleDef.defName != Defaults.colonialShuttleDefName
-                || HarmonyPatcher.combatExtendedIsLoaded
-            )
-            {
-                return true;
-            }
-
-            if (
-                __instance.shellCount == 0
-                && (
-                    !__instance.vehicle.inventory.innerContainer.Contains(__instance.savedAmmoType)
-                    // To cover the case when ammo is unloaded manually via the gizmo `SubGizmo_RemoveAmmo`:
-                    || ignoreTimer
+                if (
+                    __instance.vehicleDef.defName != Defaults.colonialShuttleDefName
+                    || HarmonyPatcher.combatExtendedIsLoaded
                 )
-            )
-            {
+                {
+                    return true;
+                }
+
+                __instance.shellCount = __instance.turretDef.magazineCapacity;
+                __instance.ActivateTimer(true);
                 return false;
             }
+        }
 
-            return true;
+        [HarmonyPatch(typeof(VehicleTurret), "HasAmmo", MethodType.Getter)]
+        class HasAmmoPatch
+        {
+            static bool Prefix(ref bool __result, VehicleTurret __instance)
+            {
+                if (
+                    __instance.vehicleDef.defName != Defaults.colonialShuttleDefName
+                    || HarmonyPatcher.combatExtendedIsLoaded
+                )
+                {
+                    return true;
+                }
+
+                __result = __instance.shellCount > 0;
+                return false;
+            }
+        }
+
+        [HarmonyPatch(typeof(VehicleTurret), nameof(VehicleTurret.FireTurret))]
+        class FireTurretPatch
+        {
+            static void Postfix(VehicleTurret __instance)
+            {
+                if (
+                    __instance.vehicleDef.defName != Defaults.colonialShuttleDefName
+                    || HarmonyPatcher.combatExtendedIsLoaded
+                )
+                {
+                    return;
+                }
+
+                __instance.ConsumeShellChambered();
+            }
         }
     }
 }
