@@ -87,7 +87,7 @@
           <slotsToOperate>1</slotsToOperate>
 
           <turretIds>
-            <li>turret_smoke</li>
+            <li>GrenadeLauncher</li>
           </turretIds>
 
           <handlingTypes>

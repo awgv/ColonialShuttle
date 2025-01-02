@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<LanguageData>
+  <!-- These are en dashes surrounded by thin spaces: -->
+  <ColonialShuttle_IncendiaryLauncher>Incendiary – 10 chemfuel</ColonialShuttle_IncendiaryLauncher>
+  <ColonialShuttle_SmokeLauncher>Smoke – 10 chemfuel</ColonialShuttle_SmokeLauncher>
+  <ColonialShuttle_EMPLauncher>EMP – 20 steel</ColonialShuttle_EMPLauncher>
+  <ColonialShuttle_ToxLauncher>Tox – 15 chemfuel</ColonialShuttle_ToxLauncher>
+  <ColonialShuttle_FirefoamLauncher>Firefoam – 10 chemfuel</ColonialShuttle_FirefoamLauncher>
+  <ColonialShuttle_SelectedGrenadeIndicator>selected</ColonialShuttle_SelectedGrenadeIndicator>
+  <ColonialShuttle_LauncherIsReloading>Grenade launcher is reloading…</ColonialShuttle_LauncherIsReloading>
+  <ColonialShuttle_NoResearchedGrenades>No research projects that unlock grenade launchers were completed.</ColonialShuttle_NoResearchedGrenades>
+</LanguageData>

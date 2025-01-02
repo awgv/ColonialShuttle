@@ -9,9 +9,9 @@
         <key>ReinforcedAlloy</key>
         <label>Reinforced alloy</label>
         <description>\nHull components:\n+14% sharp armor\n+5% blunt armor\n+50 HP\n\n-100 cargo capacity</description>
-        <icon>UI/ColonialShuttle_Reinforced_Alloy</icon>
+        <icon>UI/ColonialShuttle_ReinforcedAlloy</icon>
         <work>40000</work>
-        <gridCoordinate>(2,2)</gridCoordinate>
+        <gridCoordinate>(27,2)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <researchPrerequisites>
           <li>Fabrication</li>
@@ -109,33 +109,40 @@
           <ComponentSpacer>2</ComponentSpacer>
         </ingredients>
       </li>
-      <!-- MARK: Turret -->
+      <!-- MARK: Grenade launcher -->
       <li>
-        <key>Turret</key>
-        <label>Turret</label>
-        <description>\nA smoke turret mounted on the shuttle. The shell will release a cloud of smoke upon impact, obscuring incoming shots and preventing turrets from locking on. Requires steel to refurbish its barrel after use.\n\nUse single shots for precision, and bursts to quickly cover a general direction in smoke.\n\n-30 cargo capacity</description>
-        <icon>UI/ColonialShuttle_Turret_Smoke</icon>
+        <key>GrenadeLauncher</key>
+        <label>Grenade launcher</label>
+        <description>\nA grenade launcher mounted on the shuttle that fires all kinds of grenades. If a research project unlocks a grenade launcher, it also unlocks that grenade for the shuttle.\n\n-30 cargo capacity</description>
+        <icon>UI/ColonialShuttle_GrenadeLauncher</icon>
         <work>30000</work>
-        <gridCoordinate>(7, 2)</gridCoordinate>
+        <gridCoordinate>(32, 2)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
+        <researchPrerequisites>
+          <li>GunTurrets</li>
+        </researchPrerequisites>
 
         <upgrades>
           <li Class="Vehicles.TurretUpgrade">
             <turrets>
               <li>
-                <turretDef>ColonialShuttle_Turret_Smoke</turretDef>
+                <turretDef>ColonialShuttle_GrenadeLauncher</turretDef>
 
                 <renderProperties>
                   <north>(-0.4, 0.6)</north>
                 </renderProperties>
                 <drawLayer>3</drawLayer>
 
-                <gizmoLabel>Turret</gizmoLabel>
+                <!--
+                  Labels aren’t centered properly, so we insert spaces to fix
+                  that. You’ll have to experiment if translating.
+                -->
+                <gizmoLabel>Shoot   </gizmoLabel>
 
                 <angleRestricted />
                 <aimPieOffset>(0, -0.2)</aimPieOffset>
 
-                <key>turret_smoke</key>
+                <key>GrenadeLauncher</key>
               </li>
             </turrets>
           </li>
@@ -156,8 +163,8 @@
         </upgrades>
 
         <ingredients>
-          <Steel>110</Steel>
-          <ComponentIndustrial>6</ComponentIndustrial>
+          <Steel>150</Steel>
+          <ComponentIndustrial>10</ComponentIndustrial>
         </ingredients>
       </li>
       <!-- MARK: Chemfuel tank (A) -->
@@ -165,9 +172,9 @@
         <key>ChemfuelTankA</key>
         <label>Chemfuel tank (A)</label>
         <description>\n+260 chemfuel capacity\n-14 cargo capacity</description>
-        <icon>UI/ColonialShuttle_Chemfuel_Tank_A</icon>
+        <icon>UI/ColonialShuttle_ChemfuelTankA</icon>
         <work>1000</work>
-        <gridCoordinate>(12,2)</gridCoordinate>
+        <gridCoordinate>(27,7)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
 
         <upgrades>
@@ -197,9 +204,9 @@
         <key>OnBoardSubpersona</key>
         <label>On-board subpersona</label>
         <description>\nInstall an on-board subpersona, allowing the shuttle to fly without dedicated pilots.\n\n&lt;color=#bb8f04&gt;Warning:&lt;/color&gt; refuelling a shuttle mid-trip requires passengers. AI is also incapable of trading.</description>
-        <icon>UI/ColonialShuttle_On_Board_Subpersona</icon>
+        <icon>UI/ColonialShuttle_OnBoardSubpersona</icon>
         <work>8000</work>
-        <gridCoordinate>(17,2)</gridCoordinate>
+        <gridCoordinate>(32,7)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
 
         <upgrades>
@@ -234,9 +241,9 @@
         <key>CargoRacksB</key>
         <label>Cargo racks (B)</label>
         <description>\nReplaces A. Half of the resources will be refunded.\n\n+250 cargo capacity\n+25% chemfuel consumption per kg carried</description>
-        <icon>UI/ColonialShuttle_Cargo_Racks_B</icon>
+        <icon>UI/ColonialShuttle_CargoRacksB</icon>
         <work>1000</work>
-        <gridCoordinate>(12,7)</gridCoordinate>
+        <gridCoordinate>(12,2)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <replaces>
           <li>CargoRacksA</li>
@@ -262,9 +269,9 @@
         <key>CargoRacksA</key>
         <label>Cargo racks (A)</label>
         <description>\nReplaces B. Half of the resources will be refunded.\n\n+500 cargo capacity\n+50% chemfuel consumption per kg carried</description>
-        <icon>UI/ColonialShuttle_Cargo_Racks_A</icon>
+        <icon>UI/ColonialShuttle_CargoRacksA</icon>
         <work>2000</work>
-        <gridCoordinate>(17,7)</gridCoordinate>
+        <gridCoordinate>(17,2)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <replaces>
           <li>CargoRacksB</li>
@@ -290,9 +297,9 @@
         <key>ThrustersC</key>
         <label>Thrusters (C)</label>
         <description>\nReplaces B/A. Half of the resources will be refunded.\n\n+150 cargo capacity\n-12.5% chemfuel consumption per kg carried</description>
-        <icon>UI/ColonialShuttle_Thrusters_C</icon>
+        <icon>UI/ColonialShuttle_ThrustersC</icon>
         <work>10000</work>
-        <gridCoordinate>(7,12)</gridCoordinate>
+        <gridCoordinate>(7,7)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <replaces>
           <li>ThrustersB</li>
@@ -322,9 +329,9 @@
         <key>ThrustersB</key>
         <label>Thrusters (B)</label>
         <description>\nReplaces C/A. Half of the resources will be refunded.\n\n+260 cargo capacity\n-25% chemfuel consumption per kg carried</description>
-        <icon>UI/ColonialShuttle_Thrusters_B</icon>
+        <icon>UI/ColonialShuttle_ThrustersB</icon>
         <work>16000</work>
-        <gridCoordinate>(12,12)</gridCoordinate>
+        <gridCoordinate>(12,7)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <researchPrerequisites>
           <li>Fabrication</li>
@@ -357,9 +364,9 @@
         <key>ThrustersA</key>
         <label>Thrusters (A)</label>
         <description>\nReplaces C/B. Half of the resources will be refunded.\n\n+470 cargo capacity\n-50% chemfuel consumption per kg carried</description>
-        <icon>UI/ColonialShuttle_Thrusters_A</icon>
+        <icon>UI/ColonialShuttle_ThrustersA</icon>
         <work>24000</work>
-        <gridCoordinate>(17,12)</gridCoordinate>
+        <gridCoordinate>(17,7)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <researchPrerequisites>
           <li>AdvancedFabrication</li>
@@ -392,9 +399,9 @@
         <key>PassengerCabinD</key>
         <label>Passenger cabin (D)</label>
         <description>\nReplaces C/B/A. Half of the resources will be refunded.\n\n+2 passengers\n-190 cargo capacity</description>
-        <icon>UI/ColonialShuttle_Passenger_Cabin_D</icon>
+        <icon>UI/ColonialShuttle_PassengerCabinD</icon>
         <work>1600</work>
-        <gridCoordinate>(2,17)</gridCoordinate>
+        <gridCoordinate>(2,12)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <replaces>
           <li>PassengerCabinC</li>
@@ -439,9 +446,9 @@
         <key>PassengerCabinC</key>
         <label>Passenger cabin (C)</label>
         <description>\nReplaces D/B/A. Half of the resources will be refunded.\n\n+4 passengers\n-380 cargo capacity</description>
-        <icon>UI/ColonialShuttle_Passenger_Cabin_C</icon>
+        <icon>UI/ColonialShuttle_PassengerCabinC</icon>
         <work>3200</work>
-        <gridCoordinate>(7,17)</gridCoordinate>
+        <gridCoordinate>(7,12)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <replaces>
           <li>PassengerCabinD</li>
@@ -488,9 +495,9 @@
         <key>PassengerCabinB</key>
         <label>Passenger cabin (B)</label>
         <description>\nReplaces D/C/A. Half of the resources will be refunded.\n\n+6 passengers\n-570 cargo capacity</description>
-        <icon>UI/ColonialShuttle_Passenger_Cabin_B</icon>
+        <icon>UI/ColonialShuttle_PassengerCabinB</icon>
         <work>4800</work>
-        <gridCoordinate>(12,17)</gridCoordinate>
+        <gridCoordinate>(12,12)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <replaces>
           <li>PassengerCabinD</li>
@@ -539,9 +546,9 @@
         <key>PassengerCabinA</key>
         <label>Passenger cabin (A)</label>
         <description>\nReplaces D/C/B. Half of the resources will be refunded.\n\n+8 passengers\n-760 cargo capacity</description>
-        <icon>UI/ColonialShuttle_Passenger_Cabin_A</icon>
+        <icon>UI/ColonialShuttle_PassengerCabinA</icon>
         <work>6400</work>
-        <gridCoordinate>(17,17)</gridCoordinate>
+        <gridCoordinate>(17,12)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <replaces>
           <li>PassengerCabinD</li>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Defs>
+  <Vehicles.VehicleTurretDef ParentName="VehicleTurretBase">
+    <defName>ColonialShuttle_GrenadeLauncher</defName>
+    <label>Grenade launcher</label>
+    <description>A grenade launcher mounted on the shuttle that fires all kinds of grenades.</description>
+
+    <turretType>Rotatable</turretType>
+    <shotSound>Shot_IncendiaryLauncher</shotSound>
+
+    <projectile>Bullet_IncendiaryLauncher</projectile>
+    <!-- Cooldown after reloading: -->
+    <reloadTimer>4.5</reloadTimer>
+    <!-- warmupTime: -->
+    <warmUpTimer>4.5</warmUpTimer>
+
+    <chargePerAmmoCount>15</chargePerAmmoCount>
+    <magazineCapacity>3</magazineCapacity>
+    <genericAmmo>true</genericAmmo>
+
+    <hitFlags>IntendedTarget</hitFlags>
+
+    <autoSnapTargeting>false</autoSnapTargeting>
+    <rotationSpeed>1.6</rotationSpeed>
+
+    <projectileOffset>1</projectileOffset>
+
+    <minRange>8.9</minRange>
+    <maxRange>32.9</maxRange>
+
+    <fireModes>
+      <li>
+        <shotsPerBurst>1</shotsPerBurst>
+        <ticksBetweenBursts>20</ticksBetweenBursts>
+        <spreadRadius>1.9</spreadRadius>
+        <label>Single</label>
+        <texPath>UI/Gizmos/FireRate_Single</texPath>
+      </li>
+      <li>
+        <!-- burstShotCount: -->
+        <shotsPerBurst>3</shotsPerBurst>
+        <!-- ticksBetweenBurstShots: -->
+        <ticksBetweenShots>15</ticksBetweenShots>
+        <!-- RangedWeapon_Cooldown: -->
+        <ticksBetweenBursts>20</ticksBetweenBursts>
+        <spreadRadius>1.9</spreadRadius>
+        <label>Burst</label>
+        <texPath>UI/Gizmos/FireRate_Burst</texPath>
+      </li>
+    </fireModes>
+
+    <gizmoIconTexPath>ColonialShuttle_GrenadeLauncher_Gizmo</gizmoIconTexPath>
+
+    <graphicData>
+      <texPath>ColonialShuttle_GrenadeLauncher_Body</texPath>
+      <graphicClass>Vehicles.Graphic_Turret</graphicClass>
+      <shaderType>Cutout</shaderType>
+      <drawSize>(1,1)</drawSize>
+      <layer>1</layer>
+    </graphicData>
+
+    <graphics>
+      <li>
+        <recoil>
+          <distanceTotal>0.06</distanceTotal>
+          <distancePerTick>0.02</distancePerTick>
+          <speedMultiplierPostRecoil>0.15</speedMultiplierPostRecoil>
+        </recoil>
+        <graphicData>
+          <texPath>ColonialShuttle_GrenadeLauncher_Barrel</texPath>
+          <graphicClass>Vehicles.Graphic_Turret</graphicClass>
+          <shaderType>Cutout</shaderType>
+          <drawSize>(1,1)</drawSize>
+        </graphicData>
+      </li>
+    </graphics>
+
+    <ammunition>
+      <thingDefs>
+        <li>Chemfuel</li>
+      </thingDefs>
+    </ammunition>
+  </Vehicles.VehicleTurretDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ColonialShuttle_Bullet_FirefoamLauncher</defName>
+    <label>firefoam launcher shell</label>
+    <graphicData>
+      <texPath>Things/Projectile/LauncherShot</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+      <color>(160, 180, 160)</color>
+    </graphicData>
+    <thingClass>Projectile_Explosive</thingClass>
+    <projectile>
+      <speed>40</speed>
+      <damageDef>Extinguish</damageDef>
+      <explosionRadius>2.4</explosionRadius>
+      <applyDamageToExplosionCellsNeighbors>true</applyDamageToExplosionCellsNeighbors>
+      <explosionEffect>ExtinguisherExplosion</explosionEffect>
+      <arcHeightFactor>0.2</arcHeightFactor>
+      <shadowSize>0.6</shadowSize>
+      <screenShakeFactor>0.25</screenShakeFactor>
+      <postExplosionSpawnThingDef>Filth_FireFoam</postExplosionSpawnThingDef>
+      <postExplosionSpawnChance>0.15</postExplosionSpawnChance>
+      <postExplosionSpawnThingCount>1</postExplosionSpawnThingCount>
+    </projectile>
+  </ThingDef>
+</Defs>
