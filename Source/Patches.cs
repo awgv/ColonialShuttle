@@ -104,9 +104,13 @@ namespace ColonialShuttle
                 },
                 new ProjectileDataCached()
                 {
-                    ProjectileDef = DefDatabase<ThingDef>.GetNamed("Bullet_ToxbombLauncher"),
+                    ProjectileDef = DefDatabase<ThingDef>.GetNamedSilentFail(
+                        "Bullet_ToxbombLauncher"
+                    ),
                     TranslatedLabel = "ColonialShuttle_ToxLauncher".Translate(),
-                    ResearchPrerequisiteDef = DefDatabase<ResearchProjectDef>.GetNamed("ToxGas"),
+                    ResearchPrerequisiteDef = DefDatabase<ResearchProjectDef>.GetNamedSilentFail(
+                        "ToxGas"
+                    ),
                     AmmunitionDef = DefDatabase<ThingDef>.GetNamed("Chemfuel"),
                     ChargePerAmmoCount = 15,
                     SpreadRadius = 8.9f,
@@ -293,8 +297,8 @@ namespace ColonialShuttle
 
                     if (
                         HarmonyPatcher.cachedDataOfPossibleProjectiles
-                            .Where(projectile => projectile.ResearchPrerequisiteDef.IsFinished)
-                            .NullOrEmpty()
+                            .Where(projectile => projectile.ResearchPrerequisiteDef != null)
+                            .All(projectile => !projectile.ResearchPrerequisiteDef.IsFinished)
                     )
                     {
                         Messages.Message(
@@ -309,8 +313,7 @@ namespace ColonialShuttle
                     foreach (var projectile in HarmonyPatcher.cachedDataOfPossibleProjectiles)
                     {
                         if (
-                            projectile.ProjectileDef == null
-                            || projectile.ResearchPrerequisiteDef == null
+                            projectile.ResearchPrerequisiteDef == null
                             || !projectile.ResearchPrerequisiteDef.IsFinished
                         )
                         {

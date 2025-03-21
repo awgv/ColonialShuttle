@@ -9,13 +9,13 @@
     <turretType>Rotatable</turretType>
     <shotSound>Shot_IncendiaryLauncher</shotSound>
 
-    <projectile>Bullet_IncendiaryLauncher</projectile>
+    <projectile>Bullet_EMPLauncher</projectile>
     <!-- Cooldown after reloading: -->
     <reloadTimer>4.5</reloadTimer>
     <!-- warmupTime: -->
     <warmUpTimer>4.5</warmUpTimer>
 
-    <chargePerAmmoCount>15</chargePerAmmoCount>
+    <chargePerAmmoCount>20</chargePerAmmoCount>
     <magazineCapacity>3</magazineCapacity>
     <genericAmmo>true</genericAmmo>
 
@@ -78,7 +78,7 @@
 
     <ammunition>
       <thingDefs>
-        <li>Chemfuel</li>
+        <li>Steel</li>
       </thingDefs>
     </ammunition>
   </Vehicles.VehicleTurretDef>
