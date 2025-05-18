@@ -203,7 +203,7 @@
       <li MayRequire="Ludeon.RimWorld.Biotech">
         <key>OnBoardSubpersona</key>
         <label>On-board subpersona</label>
-        <description>\nInstall an on-board subpersona, allowing the shuttle to fly without dedicated pilots.\n\n&lt;color=#bb8f04&gt;Warning:&lt;/color&gt; refuelling a shuttle mid-trip requires passengers. AI is also incapable of trading.</description>
+        <description>\nInstall an on-board subpersona, allowing the shuttle to fly without dedicated pilots.\n\n&lt;color=#e60000&gt;Warning:&lt;/color&gt; refuelling a shuttle mid-trip requires passengers. AI is also incapable of trading.</description>
         <icon>UI/ColonialShuttle_OnBoardSubpersona</icon>
         <work>8000</work>
         <gridCoordinate>(32,7)</gridCoordinate>
@@ -268,7 +268,7 @@
       <li>
         <key>CargoRacksA</key>
         <label>Cargo racks (A)</label>
-        <description>\nReplaces B. Half of the resources will be refunded.\n\n+500 cargo capacity\n+50% chemfuel consumption per kg carried</description>
+        <description>\nReplaces B. Half of the resources will be refunded.\n\n+500 cargo capacity\n+50% chemfuel consumption per kg carried\n\n&lt;color=#e60000&gt;Warning:&lt;/color&gt; this upgrade allows the shuttle to be overloaded—fuel consumption will be noticeable at higher loads, so start taking an extra tank worth of chemfuel as cargo. Alternatively, build another shuttle and specialize instead of upgrading to A.</description>
         <icon>UI/ColonialShuttle_CargoRacksA</icon>
         <work>2000</work>
         <gridCoordinate>(17,2)</gridCoordinate>
@@ -289,7 +289,7 @@
           </li>
         </upgrades>
         <ingredients>
-          <Steel>120</Steel>
+          <Steel>60</Steel>
         </ingredients>
       </li>
       <!-- MARK: Thrusters (C) -->
