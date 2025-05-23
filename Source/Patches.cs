@@ -9,6 +9,8 @@ using Verse;
 
 namespace ColonialShuttle
 {
+    // MARK: Defaults
+
     internal static class Defaults
     {
         internal const string colonialShuttleDefName = "ColonialShuttle";
@@ -47,85 +49,72 @@ namespace ColonialShuttle
         internal const float minimumFuelConsumptionRate = 338f;
     }
 
-    internal class ProjectileDataCached
+    // MARK: LauncherDataCached
+
+    internal class LauncherDataCached
     {
-        public ThingDef ProjectileDef;
+        public VehicleTurretDef turretDef;
         public string TranslatedLabel;
         public ResearchProjectDef ResearchPrerequisiteDef;
-        public ThingDef AmmunitionDef;
-        public float ChargePerAmmoCount;
-
-        /// <summary>
-        /// Refering to the `spreadRadius` when firing in bursts only. The `spreadRadius` of single
-        /// shots is 1.9f, like all other craftable launchers in the game.
-        /// </summary>
-        public float SpreadRadius;
     }
+
+    // MARK: HarmonyPatcher
 
     [StaticConstructorOnStartup]
     public static class HarmonyPatcher
     {
         internal static float chargePerAmmoCountToSetAfterUnloading;
 
-        internal static List<ProjectileDataCached> cachedDataOfPossibleProjectiles =
-            new List<ProjectileDataCached>()
+        internal static List<LauncherDataCached> cachedDataOfPossibleLaunchers =
+            new List<LauncherDataCached>()
             {
-                new ProjectileDataCached()
+                new LauncherDataCached()
                 {
-                    ProjectileDef = DefDatabase<ThingDef>.GetNamed("Bullet_IncendiaryLauncher"),
+                    turretDef = DefDatabase<VehicleTurretDef>.GetNamed(
+                        "ColonialShuttle_GrenadeLauncher_Incendiary"
+                    ),
                     TranslatedLabel = "ColonialShuttle_IncendiaryLauncher".Translate(),
                     ResearchPrerequisiteDef = DefDatabase<ResearchProjectDef>.GetNamed(
                         "Gunsmithing"
                     ),
-                    AmmunitionDef = DefDatabase<ThingDef>.GetNamed("Chemfuel"),
-                    ChargePerAmmoCount = 10,
-                    SpreadRadius = 1.9f,
                 },
-                new ProjectileDataCached()
+                new LauncherDataCached()
                 {
-                    ProjectileDef = DefDatabase<ThingDef>.GetNamed("Bullet_SmokeLauncher"),
+                    turretDef = DefDatabase<VehicleTurretDef>.GetNamed(
+                        "ColonialShuttle_GrenadeLauncher_Smoke"
+                    ),
                     TranslatedLabel = "ColonialShuttle_SmokeLauncher".Translate(),
                     ResearchPrerequisiteDef = DefDatabase<ResearchProjectDef>.GetNamed(
                         "Gunsmithing"
                     ),
-                    AmmunitionDef = DefDatabase<ThingDef>.GetNamed("Chemfuel"),
-                    ChargePerAmmoCount = 10,
-                    SpreadRadius = 8.9f,
                 },
-                new ProjectileDataCached()
+                new LauncherDataCached()
                 {
-                    ProjectileDef = DefDatabase<ThingDef>.GetNamed("Bullet_EMPLauncher"),
+                    turretDef = DefDatabase<VehicleTurretDef>.GetNamed(
+                        "ColonialShuttle_GrenadeLauncher"
+                    ),
                     TranslatedLabel = "ColonialShuttle_EMPLauncher".Translate(),
                     ResearchPrerequisiteDef = DefDatabase<ResearchProjectDef>.GetNamed(
                         "MicroelectronicsBasics"
                     ),
-                    AmmunitionDef = DefDatabase<ThingDef>.GetNamed("Steel"),
-                    ChargePerAmmoCount = 20,
-                    SpreadRadius = 1.9f,
                 },
-                new ProjectileDataCached()
+                new LauncherDataCached()
                 {
-                    ProjectileDef = DefDatabase<ThingDef>.GetNamedSilentFail(
-                        "Bullet_ToxbombLauncher"
+                    turretDef = DefDatabase<VehicleTurretDef>.GetNamedSilentFail(
+                        "ColonialShuttle_GrenadeLauncher_Tox"
                     ),
                     TranslatedLabel = "ColonialShuttle_ToxLauncher".Translate(),
                     ResearchPrerequisiteDef = DefDatabase<ResearchProjectDef>.GetNamedSilentFail(
                         "ToxGas"
                     ),
-                    AmmunitionDef = DefDatabase<ThingDef>.GetNamed("Chemfuel"),
-                    ChargePerAmmoCount = 15,
-                    SpreadRadius = 8.9f,
                 },
-                new ProjectileDataCached()
+                new LauncherDataCached()
                 {
-                    ProjectileDef = DefDatabase<ThingDef>.GetNamed(
-                        "ColonialShuttle_Bullet_FirefoamLauncher"
+                    turretDef = DefDatabase<VehicleTurretDef>.GetNamed(
+                        "ColonialShuttle_GrenadeLauncher_Firefoam"
                     ),
                     TranslatedLabel = "ColonialShuttle_FirefoamLauncher".Translate(),
                     ResearchPrerequisiteDef = DefDatabase<ResearchProjectDef>.GetNamed("Firefoam"),
-                    AmmunitionDef = DefDatabase<ThingDef>.GetNamed("Chemfuel"),
-                    ChargePerAmmoCount = 10,
-                    SpreadRadius = 6.9f,
                 },
             };
 
@@ -146,7 +135,34 @@ namespace ColonialShuttle
         }
     }
 
-    // MARK: Dynamic fuel consumption rate:
+    // <summary>
+    // This is a bug fix for the Vehicle Framework that should be removed once fixed upstream.
+    //
+    // If a vehicle can launch like transport pods, its turrets do not resume ticking on
+    // landing, so ammo reloading gets paused.
+    // </summary>
+    [HarmonyPatch(typeof(CompVehicleTurrets), nameof(CompVehicleTurrets.PostSpawnSetup))]
+    class PostSpawnSetupPatch
+    {
+        static void Postfix(CompVehicleTurrets __instance, bool respawningAfterLoad)
+        {
+            if (__instance.Vehicle.def.defName != Defaults.colonialShuttleDefName)
+            {
+                return;
+            }
+
+            foreach (VehicleTurret turret in __instance.turrets)
+            {
+                if (respawningAfterLoad)
+                {
+                    continue;
+                }
+                turret.StartTicking();
+            }
+        }
+    }
+
+    // MARK: Dynamic fuel consumption rate
 
     [HarmonyPatch(
         typeof(CompVehicleLauncher),
@@ -232,36 +248,7 @@ namespace ColonialShuttle
         }
     }
 
-    // MARK: Ammo handling:
-
-    // <summary>
-    // This is a bug fix for the Vehicle Framework that should be removed once fixed upstream.
-    //
-    // If a vehicle can launch like transport pods, its turrets do not resume ticking on
-    // landing, so ammo reloading gets paused.
-    // </summary>
-    [HarmonyPatch(typeof(CompVehicleTurrets), nameof(CompVehicleTurrets.PostSpawnSetup))]
-    class PostSpawnSetupPatch
-    {
-        static void Postfix(CompVehicleTurrets __instance, bool respawningAfterLoad)
-        {
-            // In case of destructive side effects, it’s probably better to keep the fix local:
-            if (__instance.Vehicle.def.defName != Defaults.colonialShuttleDefName)
-            {
-                return;
-            }
-
-            foreach (VehicleTurret turret in __instance.turrets)
-            {
-                if (respawningAfterLoad)
-                {
-                    continue;
-                }
-
-                turret.StartTicking();
-            }
-        }
-    }
+    // MARK: Ammo handling
 
     [HarmonyPatch(typeof(VehicleTurret), nameof(VehicleTurret.SubGizmo_ReloadFromInventory))]
     class SubGizmo_ReloadFromInventoryPatch
@@ -298,7 +285,7 @@ namespace ColonialShuttle
                     }
 
                     if (
-                        HarmonyPatcher.cachedDataOfPossibleProjectiles
+                        HarmonyPatcher.cachedDataOfPossibleLaunchers
                             .Where(projectile => projectile.ResearchPrerequisiteDef != null)
                             .All(projectile => !projectile.ResearchPrerequisiteDef.IsFinished)
                     )
@@ -312,19 +299,19 @@ namespace ColonialShuttle
 
                     List<FloatMenuOption> options = new List<FloatMenuOption>();
 
-                    foreach (var projectile in HarmonyPatcher.cachedDataOfPossibleProjectiles)
+                    foreach (var launcher in HarmonyPatcher.cachedDataOfPossibleLaunchers)
                     {
                         if (
-                            projectile.ResearchPrerequisiteDef == null
-                            || !projectile.ResearchPrerequisiteDef.IsFinished
+                            launcher.ResearchPrerequisiteDef == null
+                            || !launcher.ResearchPrerequisiteDef.IsFinished
                         )
                         {
                             continue;
                         }
 
-                        string label = projectile.TranslatedLabel;
+                        string label = launcher.TranslatedLabel;
 
-                        if (turret.turretDef.projectile == projectile.ProjectileDef)
+                        if (turret.turretDef == launcher.turretDef)
                         {
                             // An en dash surrounded by thin spaces:
                             label += " – " + "ColonialShuttle_SelectedGrenadeIndicator".Translate();
@@ -336,7 +323,7 @@ namespace ColonialShuttle
                                 delegate()
                                 {
                                     if (
-                                        turret.turretDef.projectile == projectile.ProjectileDef
+                                        turret.turretDef == launcher.turretDef
                                         && turret.shellCount == turret.turretDef.magazineCapacity
                                     )
                                     {
@@ -348,10 +335,12 @@ namespace ColonialShuttle
                                             .Where(
                                                 stack =>
                                                     stack.def.defName
-                                                    == projectile.AmmunitionDef.defName
+                                                    == launcher.turretDef.ammunition.AllowedThingDefs
+                                                        .FirstOrDefault()
+                                                        .ToString()
                                             )
                                             .Sum(stack => stack.stackCount)
-                                        < projectile.ChargePerAmmoCount
+                                        < launcher.turretDef.chargePerAmmoCount
                                     )
                                     {
                                         Messages.Message(
@@ -361,26 +350,25 @@ namespace ColonialShuttle
                                         return;
                                     }
 
-                                    turret.turretDef.projectile = projectile.ProjectileDef;
-                                    turret.turretDef.ammunition.SetDisallowAll();
-                                    turret.turretDef.ammunition.SetAllow(
-                                        projectile.AmmunitionDef,
-                                        true
-                                    );
-                                    turret.turretDef.fireModes
-                                        .Where(fireMode => fireMode.shotsPerBurst == 3)
-                                        .FirstOrDefault()
-                                        .spreadRadius = projectile.SpreadRadius;
+                                    float chargePerAmmoCountToSetBeforeUnloading = turret
+                                        .turretDef
+                                        .chargePerAmmoCount;
+                                    HarmonyPatcher.chargePerAmmoCountToSetAfterUnloading = launcher
+                                        .turretDef
+                                        .chargePerAmmoCount;
 
-                                    HarmonyPatcher.chargePerAmmoCountToSetAfterUnloading =
-                                        projectile.ChargePerAmmoCount;
+                                    // Should be reset to trigger the timer when both
+                                    // VehicleTurretDef use the same ammo type:
                                     turret.savedAmmoType = null;
 
+                                    turret.turretDef = launcher.turretDef;
+                                    turret.turretDef.chargePerAmmoCount =
+                                        chargePerAmmoCountToSetBeforeUnloading;
+
                                     turret.ReloadCannon(
-                                        turret.turretDef.ammunition.AllowedThingDefs.FirstOrDefault(),
-                                        turret.vehicle.inventory.innerContainer.Contains(
-                                            turret.turretDef.ammunition.AllowedThingDefs.FirstOrDefault()
-                                        )
+                                        launcher.turretDef.ammunition.AllowedThingDefs.FirstOrDefault(),
+                                        launcher.turretDef.ammunition.AllowedThingDefs.FirstOrDefault()
+                                            != turret.savedAmmoType
                                     );
                                 }
                             )
@@ -401,9 +389,9 @@ namespace ColonialShuttle
         /// <summary>
         /// When a different ammo type is selected, loaded ammo gets converted into a resource and
         /// inserted back into the inventory. If we set `chargePerAmmoCount` before `TryRemoveShell`
-        /// — executed as a part of `VehicleTurret.ReloadInternal` — loaded ammo uses the
-        /// `chargePerAmmoCount` of the ammo type that’s selected in `SubGizmo_ReloadFromInventory`,
-        /// and not the one currently selected.
+        /// — called from `VehicleTurret.ReloadInternal` — loaded ammo uses the `chargePerAmmoCount`
+        /// of the ammo type that’s selected in `SubGizmo_ReloadFromInventory`, and not the one
+        /// currently selected.
         ///
         /// For example, the `magazineCapacity` is 2, `chargePerAmmoCount` of the ammo type A
         /// (currently selected) is 10 and `chargePerAmmoCount` of the ammo type B is 5. If we
@@ -442,7 +430,7 @@ namespace ColonialShuttle
                 __instance.shellCount == 0
                 && (
                     !__instance.vehicle.inventory.innerContainer.Contains(__instance.savedAmmoType)
-                    // To cover the case when ammo is unloaded manually via the gizmo `SubGizmo_RemoveAmmo`:
+                    // To cover the case when ammo is unloaded manually via the `SubGizmo_RemoveAmmo`:
                     || ignoreTimer
                 )
             )

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <Defs>
-  <Vehicles.VehicleTurretDef ParentName="VehicleTurretBase">
+  <!-- MARK: ColonialShuttle_GrenadeLauncher -->
+  <!-- TODO: Maybe rename to `ColonialShuttle_GrenadeLauncher_EMP` when 1.6 comes out.
+  This will break the Combat Extended patch. -->
+  <Vehicles.VehicleTurretDef Name="ColonialShuttle_GrenadeLauncherBase" ParentName="VehicleTurretBase">
     <defName>ColonialShuttle_GrenadeLauncher</defName>
     <label>Grenade launcher</label>
     <description>A grenade launcher mounted on the shuttle that fires all kinds of grenades.</description>
@@ -83,6 +86,143 @@
     </ammunition>
   </Vehicles.VehicleTurretDef>
 
+  <!-- MARK: Incendiary -->
+  <Vehicles.VehicleTurretDef ParentName="ColonialShuttle_GrenadeLauncherBase">
+    <defName>ColonialShuttle_GrenadeLauncher_Incendiary</defName>
+    <projectile>Bullet_IncendiaryLauncher</projectile>
+    <chargePerAmmoCount>10</chargePerAmmoCount>
+
+    <fireModes Inherit="False">
+      <li>
+        <shotsPerBurst>1</shotsPerBurst>
+        <ticksBetweenBursts>20</ticksBetweenBursts>
+        <spreadRadius>1.9</spreadRadius>
+        <label>Single</label>
+        <texPath>UI/Gizmos/FireRate_Single</texPath>
+      </li>
+      <li>
+        <!-- burstShotCount: -->
+        <shotsPerBurst>3</shotsPerBurst>
+        <!-- ticksBetweenBurstShots: -->
+        <ticksBetweenShots>15</ticksBetweenShots>
+        <!-- RangedWeapon_Cooldown: -->
+        <ticksBetweenBursts>20</ticksBetweenBursts>
+        <spreadRadius>1.9</spreadRadius>
+        <label>Burst</label>
+        <texPath>UI/Gizmos/FireRate_Burst</texPath>
+      </li>
+    </fireModes>
+
+    <ammunition Inherit="False">
+      <thingDefs>
+        <li>Chemfuel</li>
+      </thingDefs>
+    </ammunition>
+  </Vehicles.VehicleTurretDef>
+
+  <!-- MARK: Smoke -->
+  <Vehicles.VehicleTurretDef ParentName="ColonialShuttle_GrenadeLauncherBase">
+    <defName>ColonialShuttle_GrenadeLauncher_Smoke</defName>
+    <projectile>Bullet_SmokeLauncher</projectile>
+    <chargePerAmmoCount>10</chargePerAmmoCount>
+
+    <fireModes Inherit="False">
+      <li>
+        <shotsPerBurst>1</shotsPerBurst>
+        <ticksBetweenBursts>20</ticksBetweenBursts>
+        <spreadRadius>1.9</spreadRadius>
+        <label>Single</label>
+        <texPath>UI/Gizmos/FireRate_Single</texPath>
+      </li>
+      <li>
+        <!-- burstShotCount: -->
+        <shotsPerBurst>3</shotsPerBurst>
+        <!-- ticksBetweenBurstShots: -->
+        <ticksBetweenShots>15</ticksBetweenShots>
+        <!-- RangedWeapon_Cooldown: -->
+        <ticksBetweenBursts>20</ticksBetweenBursts>
+        <spreadRadius>8.9</spreadRadius>
+        <label>Burst</label>
+        <texPath>UI/Gizmos/FireRate_Burst</texPath>
+      </li>
+    </fireModes>
+
+    <ammunition Inherit="False">
+      <thingDefs>
+        <li>Chemfuel</li>
+      </thingDefs>
+    </ammunition>
+  </Vehicles.VehicleTurretDef>
+
+  <!-- MARK: Tox -->
+  <Vehicles.VehicleTurretDef ParentName="ColonialShuttle_GrenadeLauncherBase">
+    <defName>ColonialShuttle_GrenadeLauncher_Tox</defName>
+    <projectile>Bullet_ToxbombLauncher</projectile>
+    <chargePerAmmoCount>15</chargePerAmmoCount>
+
+    <fireModes Inherit="False">
+      <li>
+        <shotsPerBurst>1</shotsPerBurst>
+        <ticksBetweenBursts>20</ticksBetweenBursts>
+        <spreadRadius>1.9</spreadRadius>
+        <label>Single</label>
+        <texPath>UI/Gizmos/FireRate_Single</texPath>
+      </li>
+      <li>
+        <!-- burstShotCount: -->
+        <shotsPerBurst>3</shotsPerBurst>
+        <!-- ticksBetweenBurstShots: -->
+        <ticksBetweenShots>15</ticksBetweenShots>
+        <!-- RangedWeapon_Cooldown: -->
+        <ticksBetweenBursts>20</ticksBetweenBursts>
+        <spreadRadius>8.9</spreadRadius>
+        <label>Burst</label>
+        <texPath>UI/Gizmos/FireRate_Burst</texPath>
+      </li>
+    </fireModes>
+
+    <ammunition Inherit="False">
+      <thingDefs>
+        <li>Chemfuel</li>
+      </thingDefs>
+    </ammunition>
+  </Vehicles.VehicleTurretDef>
+
+  <!-- MARK: Firefoam -->
+  <Vehicles.VehicleTurretDef ParentName="ColonialShuttle_GrenadeLauncherBase">
+    <defName>ColonialShuttle_GrenadeLauncher_Firefoam</defName>
+    <projectile>ColonialShuttle_Bullet_FirefoamLauncher</projectile>
+    <chargePerAmmoCount>10</chargePerAmmoCount>
+
+    <fireModes Inherit="False">
+      <li>
+        <shotsPerBurst>1</shotsPerBurst>
+        <ticksBetweenBursts>20</ticksBetweenBursts>
+        <spreadRadius>1.9</spreadRadius>
+        <label>Single</label>
+        <texPath>UI/Gizmos/FireRate_Single</texPath>
+      </li>
+      <li>
+        <!-- burstShotCount: -->
+        <shotsPerBurst>3</shotsPerBurst>
+        <!-- ticksBetweenBurstShots: -->
+        <ticksBetweenShots>15</ticksBetweenShots>
+        <!-- RangedWeapon_Cooldown: -->
+        <ticksBetweenBursts>20</ticksBetweenBursts>
+        <spreadRadius>6.9</spreadRadius>
+        <label>Burst</label>
+        <texPath>UI/Gizmos/FireRate_Burst</texPath>
+      </li>
+    </fireModes>
+
+    <ammunition Inherit="False">
+      <thingDefs>
+        <li>Chemfuel</li>
+      </thingDefs>
+    </ammunition>
+  </Vehicles.VehicleTurretDef>
+
+  <!-- MARK: ColonialShuttle_Bullet_FirefoamLauncher -->
   <ThingDef ParentName="BaseBullet">
     <defName>ColonialShuttle_Bullet_FirefoamLauncher</defName>
     <label>firefoam launcher shell</label>

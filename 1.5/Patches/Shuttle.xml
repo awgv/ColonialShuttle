@@ -16,6 +16,7 @@
       </graphicData>
     </value>
   </Operation>
+
   <Operation Class="PatchOperationReplace">
     <xpath>/Defs/ThingDef[@Name="ShuttleSkyfallerBase"]/graphicData</xpath>
     <value>
