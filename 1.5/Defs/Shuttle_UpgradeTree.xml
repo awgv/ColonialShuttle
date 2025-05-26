@@ -282,7 +282,7 @@
             <vehicleStats>
               <li>
                 <def>CargoCapacity</def>
-                <value>500</value>
+                <value>600</value>
                 <type>Add</type>
               </li>
             </vehicleStats>
