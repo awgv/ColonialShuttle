@@ -2,8 +2,6 @@
 
 <Defs>
   <!-- MARK: ColonialShuttle_GrenadeLauncher -->
-  <!-- TODO: Maybe rename to `ColonialShuttle_GrenadeLauncher_EMP` when 1.6 comes out.
-  This will break the Combat Extended patch. -->
   <Vehicles.VehicleTurretDef Name="ColonialShuttle_GrenadeLauncherBase" ParentName="VehicleTurretBase">
     <defName>ColonialShuttle_GrenadeLauncher</defName>
     <label>Grenade launcher</label>
@@ -47,7 +45,7 @@
         <ticksBetweenShots>15</ticksBetweenShots>
         <!-- RangedWeapon_Cooldown: -->
         <ticksBetweenBursts>20</ticksBetweenBursts>
-        <spreadRadius>1.9</spreadRadius>
+        <spreadRadius>2.2</spreadRadius>
         <label>Burst</label>
         <texPath>UI/Gizmos/FireRate_Burst</texPath>
       </li>
@@ -107,7 +105,7 @@
         <ticksBetweenShots>15</ticksBetweenShots>
         <!-- RangedWeapon_Cooldown: -->
         <ticksBetweenBursts>20</ticksBetweenBursts>
-        <spreadRadius>1.9</spreadRadius>
+        <spreadRadius>2.2</spreadRadius>
         <label>Burst</label>
         <texPath>UI/Gizmos/FireRate_Burst</texPath>
       </li>
