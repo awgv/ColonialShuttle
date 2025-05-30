@@ -130,7 +130,6 @@ namespace ColonialShuttle
 
         static HarmonyPatcher()
         {
-            Log.Message("<color=#00BFFF>∷Colonial Shuttle∷</color> version 2.0.3");
             new Harmony("awgv.ColonialShuttle").PatchAll();
         }
     }

@@ -392,7 +392,7 @@
       <li>
         <key>PassengerCabinD</key>
         <label>Passenger cabin (D)</label>
-        <description>\nReplaces C/B/A. Half of the resources will be refunded.\n\n+2 passengers\n-190 cargo capacity</description>
+        <description>\nReplaces C/B/A. Half of the resources will be refunded.\n\n+2 passengers\n-175 cargo capacity</description>
         <icon>UI/ColonialShuttle_PassengerCabinD</icon>
         <work>1600</work>
         <gridCoordinate>(2,7)</gridCoordinate>
@@ -424,7 +424,7 @@
             <vehicleStats>
               <li>
                 <def>CargoCapacity</def>
-                <value>-190</value>
+                <value>-175</value>
                 <type>Add</type>
               </li>
             </vehicleStats>
@@ -439,7 +439,7 @@
       <li>
         <key>PassengerCabinC</key>
         <label>Passenger cabin (C)</label>
-        <description>\nReplaces D/B/A. Half of the resources will be refunded.\n\n+4 passengers\n-380 cargo capacity</description>
+        <description>\nReplaces D/B/A. Half of the resources will be refunded.\n\n+4 passengers\n-350 cargo capacity</description>
         <icon>UI/ColonialShuttle_PassengerCabinC</icon>
         <work>3200</work>
         <gridCoordinate>(7,7)</gridCoordinate>
@@ -473,7 +473,7 @@
             <vehicleStats>
               <li>
                 <def>CargoCapacity</def>
-                <value>-380</value>
+                <value>-350</value>
                 <type>Add</type>
               </li>
             </vehicleStats>
@@ -488,7 +488,7 @@
       <li>
         <key>PassengerCabinB</key>
         <label>Passenger cabin (B)</label>
-        <description>\nReplaces D/C/A. Half of the resources will be refunded.\n\n+6 passengers\n-570 cargo capacity</description>
+        <description>\nReplaces D/C/A. Half of the resources will be refunded.\n\n+6 passengers\n-525 cargo capacity</description>
         <icon>UI/ColonialShuttle_PassengerCabinB</icon>
         <work>4800</work>
         <gridCoordinate>(12,7)</gridCoordinate>
@@ -524,7 +524,7 @@
             <vehicleStats>
               <li>
                 <def>CargoCapacity</def>
-                <value>-570</value>
+                <value>-525</value>
                 <type>Add</type>
               </li>
             </vehicleStats>
@@ -539,7 +539,7 @@
       <li>
         <key>PassengerCabinA</key>
         <label>Passenger cabin (A)</label>
-        <description>\nReplaces D/C/B. Half of the resources will be refunded.\n\n+8 passengers\n-760 cargo capacity</description>
+        <description>\nReplaces D/C/B. Half of the resources will be refunded.\n\n+8 passengers\n-700 cargo capacity</description>
         <icon>UI/ColonialShuttle_PassengerCabinA</icon>
         <work>6400</work>
         <gridCoordinate>(17,7)</gridCoordinate>
@@ -577,7 +577,7 @@
             <vehicleStats>
               <li>
                 <def>CargoCapacity</def>
-                <value>-760</value>
+                <value>-700</value>
                 <type>Add</type>
               </li>
             </vehicleStats>
