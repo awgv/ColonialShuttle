@@ -268,7 +268,7 @@
       <li>
         <key>CargoRacksA</key>
         <label>Cargo racks (A)</label>
-        <description>\nReplaces B. Half of the resources will be refunded.\n\n+500 cargo capacity\n+50% chemfuel consumption per kg carried\n\n&lt;color=#e60000&gt;Warning:&lt;/color&gt; this upgrade allows the shuttle to be overloaded—fuel consumption will be noticeable at higher loads, so start taking an extra tank worth of chemfuel as cargo. Alternatively, build another shuttle and specialize instead of upgrading to A.</description>
+        <description>\nReplaces B. Half of the resources will be refunded.\n\n+600 cargo capacity\n+50% chemfuel consumption per kg carried\n\n&lt;color=#e60000&gt;Warning:&lt;/color&gt; this upgrade allows the shuttle to be overloaded—fuel consumption will be noticeable at higher loads, so start taking an extra tank worth of chemfuel as cargo. Alternatively, build another shuttle and specialize instead of upgrading to A.</description>
         <icon>UI/ColonialShuttle_CargoRacksA</icon>
         <work>2000</work>
         <gridCoordinate>(17,2)</gridCoordinate>
@@ -398,7 +398,7 @@
       <li>
         <key>PassengerCabinD</key>
         <label>Passenger cabin (D)</label>
-        <description>\nReplaces C/B/A. Half of the resources will be refunded.\n\n+2 passengers\n-190 cargo capacity</description>
+        <description>\nReplaces C/B/A. Half of the resources will be refunded.\n\n+2 passengers\n-175 cargo capacity</description>
         <icon>UI/ColonialShuttle_PassengerCabinD</icon>
         <work>1600</work>
         <gridCoordinate>(2,12)</gridCoordinate>
@@ -430,7 +430,7 @@
             <vehicleStats>
               <li>
                 <def>CargoCapacity</def>
-                <value>-190</value>
+                <value>-175</value>
                 <type>Add</type>
               </li>
             </vehicleStats>
@@ -445,7 +445,7 @@
       <li>
         <key>PassengerCabinC</key>
         <label>Passenger cabin (C)</label>
-        <description>\nReplaces D/B/A. Half of the resources will be refunded.\n\n+4 passengers\n-380 cargo capacity</description>
+        <description>\nReplaces D/B/A. Half of the resources will be refunded.\n\n+4 passengers\n-350 cargo capacity</description>
         <icon>UI/ColonialShuttle_PassengerCabinC</icon>
         <work>3200</work>
         <gridCoordinate>(7,12)</gridCoordinate>
@@ -479,7 +479,7 @@
             <vehicleStats>
               <li>
                 <def>CargoCapacity</def>
-                <value>-380</value>
+                <value>-350</value>
                 <type>Add</type>
               </li>
             </vehicleStats>
@@ -494,7 +494,7 @@
       <li>
         <key>PassengerCabinB</key>
         <label>Passenger cabin (B)</label>
-        <description>\nReplaces D/C/A. Half of the resources will be refunded.\n\n+6 passengers\n-570 cargo capacity</description>
+        <description>\nReplaces D/C/A. Half of the resources will be refunded.\n\n+6 passengers\n-525 cargo capacity</description>
         <icon>UI/ColonialShuttle_PassengerCabinB</icon>
         <work>4800</work>
         <gridCoordinate>(12,12)</gridCoordinate>
@@ -530,7 +530,7 @@
             <vehicleStats>
               <li>
                 <def>CargoCapacity</def>
-                <value>-570</value>
+                <value>-525</value>
                 <type>Add</type>
               </li>
             </vehicleStats>
@@ -545,7 +545,7 @@
       <li>
         <key>PassengerCabinA</key>
         <label>Passenger cabin (A)</label>
-        <description>\nReplaces D/C/B. Half of the resources will be refunded.\n\n+8 passengers\n-760 cargo capacity</description>
+        <description>\nReplaces D/C/B. Half of the resources will be refunded.\n\n+8 passengers\n-700 cargo capacity</description>
         <icon>UI/ColonialShuttle_PassengerCabinA</icon>
         <work>6400</work>
         <gridCoordinate>(17,12)</gridCoordinate>
@@ -583,7 +583,7 @@
             <vehicleStats>
               <li>
                 <def>CargoCapacity</def>
-                <value>-760</value>
+                <value>-700</value>
                 <type>Add</type>
               </li>
             </vehicleStats>
