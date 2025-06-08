@@ -36,7 +36,7 @@ namespace ColonialShuttle
             new Dictionary<string, float>()
             {
                 { "CargoRacksB", 0.25f },
-                { "CargoRacksA", 0.5f },
+                { "CargoRacksA", 0.25f },
                 { "ThrustersC", -0.125f },
                 { "ThrustersB", -0.25f },
                 { "ThrustersA", -0.5f },
@@ -47,6 +47,14 @@ namespace ColonialShuttle
         /// little cargo.
         /// </summary>
         internal const float minimumFuelConsumptionRate = 338f;
+
+        internal const float cargoCapacityIncreaseWhenOverloaded = 350f;
+
+        /// <summary>
+        /// The original idea was to have 2 thresholds for increased chemfuel consumption: one for
+        /// +25% and one for +50%.
+        /// </summary>
+        internal const float recommendedCargoCapacity = 870f;
     }
 
     // MARK: LauncherDataCached
@@ -207,12 +215,83 @@ namespace ColonialShuttle
                 return __result;
             }
 
+            bool cargoRacksAreOverloaded = __instance.Vehicle.CompUpgradeTree.NodeUnlocked(
+                __instance.Vehicle.CompUpgradeTree.Props.def.nodes
+                    .Where(node => node.key == "CargoRacksA")
+                    .First()
+            );
+
+            float fuelConsumptionRatePerKilogramAfterUpgrades =
+                CalculateFuelConsumptionRatePerKilogramAfterUpgrades(__instance);
+            float totalWeightOfCargoInKilograms = MassUtility.InventoryMass(__instance.Vehicle);
+            foreach (var pawn in __instance.Vehicle.AllPawnsAboard)
+            {
+                totalWeightOfCargoInKilograms += pawn.GetStatValue(StatDefOf.Mass);
+            }
+
+            float amountOfOverloadedWeight =
+                totalWeightOfCargoInKilograms
+                - MassUtility.Capacity(__instance.Vehicle)
+                + Defaults.cargoCapacityIncreaseWhenOverloaded;
+            //
+            // float fuelConsumptionRate = cargoRacksAreOverloaded
+            //     ? (totalWeightOfCargoInKilograms - amountOfOverloadedWeight)
+            //         * CalculateFuelConsumptionRatePerKilogramAfterUpgrades(__instance)
+            //         + amountOfOverloadedWeight
+            //             * CalculateFuelConsumptionRatePerKilogramAfterUpgrades(__instance)
+            //     : totalWeightOfCargoInKilograms
+            //         * CalculateFuelConsumptionRatePerKilogramAfterUpgrades(__instance);
+            //
+            float fuelConsumptionRate;
+
+            if (cargoRacksAreOverloaded && amountOfOverloadedWeight > 0)
+            {
+                // 1031 kg with 3 colonists = 25 fuel per tile to east, 50 per two
+                // 1106 kg with 3 colonists = 20 fuel per tile to east, 39 per two
+                float extraFuelConsumptionRatePerKilogram =
+                    fuelConsumptionRatePerKilogramAfterUpgrades
+                    + Defaults.fuelConsumptionRatePerKilogram
+                        * Defaults.fuelConsumptionRateMultipliersForUpgrades["CargoRacksA"]
+                        / (
+                            MassUtility.Capacity(__instance.Vehicle)
+                            - Defaults.cargoCapacityIncreaseWhenOverloaded
+                        );
+
+                Log.Warning($"FCR {fuelConsumptionRatePerKilogramAfterUpgrades}");
+                Log.Warning(
+                    $"EFCR {amountOfOverloadedWeight * extraFuelConsumptionRatePerKilogram}"
+                );
+                Log.Warning($"EW {amountOfOverloadedWeight}");
+
+                fuelConsumptionRate =
+                    (totalWeightOfCargoInKilograms - amountOfOverloadedWeight)
+                        * fuelConsumptionRatePerKilogramAfterUpgrades
+                    + amountOfOverloadedWeight * fuelConsumptionRatePerKilogramAfterUpgrades;
+            }
+            else
+            {
+                fuelConsumptionRate =
+                    totalWeightOfCargoInKilograms * fuelConsumptionRatePerKilogramAfterUpgrades;
+            }
+
+            return fuelConsumptionRate <= Defaults.minimumFuelConsumptionRate
+                ? Defaults.minimumFuelConsumptionRate
+                : fuelConsumptionRate;
+        }
+
+        static float CalculateFuelConsumptionRatePerKilogramAfterUpgrades(
+            CompFueledTravel __instance
+        )
+        {
             float fuelConsumptionRatePerKilogramAfterUpgrades =
                 Defaults.fuelConsumptionRatePerKilogram;
 
             foreach (var node in __instance.Vehicle.CompUpgradeTree.Props.def.nodes)
             {
-                if (!__instance.Vehicle.CompUpgradeTree.NodeUnlocked(node))
+                if (
+                    !__instance.Vehicle.CompUpgradeTree.NodeUnlocked(node)
+                    || node.key == "CargoRacksA"
+                )
                 {
                     continue;
                 }
@@ -225,25 +304,9 @@ namespace ColonialShuttle
                 }
             }
 
-            if (fuelConsumptionRatePerKilogramAfterUpgrades <= 0)
-            {
-                fuelConsumptionRatePerKilogramAfterUpgrades =
-                    Defaults.fuelConsumptionRatePerKilogram;
-            }
-
-            float totalWeightOfCargoInKilograms = MassUtility.InventoryMass(__instance.Vehicle);
-
-            foreach (var pawn in __instance.Vehicle.AllPawnsAboard)
-            {
-                totalWeightOfCargoInKilograms += pawn.GetStatValue(StatDefOf.Mass);
-            }
-
-            float fuelConsumptionRate =
-                totalWeightOfCargoInKilograms * fuelConsumptionRatePerKilogramAfterUpgrades;
-
-            return fuelConsumptionRate <= Defaults.minimumFuelConsumptionRate
-                ? Defaults.minimumFuelConsumptionRate
-                : fuelConsumptionRate;
+            return fuelConsumptionRatePerKilogramAfterUpgrades <= 0
+                ? Defaults.fuelConsumptionRatePerKilogram
+                : fuelConsumptionRatePerKilogramAfterUpgrades;
         }
     }
 

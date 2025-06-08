@@ -236,15 +236,18 @@
           <SubcoreHigh>1</SubcoreHigh>
         </ingredients>
       </li>
-      <!-- MARK: Cargo racks -->
+      <!-- MARK: Cargo racks (B) -->
       <li>
-        <key>CargoRacks</key>
-        <label>Cargo racks</label>
-        <description>\n+250 cargo capacity\n+25% chemfuel consumption per kg carried</description>
-        <icon>UI/ColonialShuttle_CargoRacks</icon>
+        <key>CargoRacksB</key>
+        <label>Cargo racks (B)</label>
+        <description>\nReplaces A. Half of the resources will be refunded.\n\n+250 cargo capacity\n+25% chemfuel consumption per kg carried</description>
+        <icon>UI/ColonialShuttle_CargoRacksB</icon>
         <work>1000</work>
-        <gridCoordinate>(27,12)</gridCoordinate>
+        <gridCoordinate>(12,2)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
+        <replaces>
+          <li>CargoRacksA</li>
+        </replaces>
 
         <upgrades>
           <li Class="Vehicles.StatUpgrade">
@@ -261,17 +264,17 @@
           <Steel>60</Steel>
         </ingredients>
       </li>
-      <!-- MARK: Overload -->
+      <!-- MARK: Cargo racks (A) -->
       <li>
-        <key>CargoRacksOverloaded</key>
-        <label>Overload</label>
-        <description>\nAllow exceeding the recommended cargo capacity at the expense of increased chemfuel consumption.\n\n+600 cargo capacity\n+50% chemfuel consumption per kg carried\n\n&lt;color=#e60000&gt;Warning:&lt;/color&gt; fuel consumption will be noticeable at higher loads and with weaker thrusters, so start taking an extra tank worth of chemfuel as cargo. Alternatively, build another shuttle and specialize instead of overloading.</description>
-        <icon>UI/ColonialShuttle_CargoRacksOverloaded</icon>
-        <work>0</work>
-        <gridCoordinate>(32,12)</gridCoordinate>
+        <key>CargoRacksA</key>
+        <label>Cargo racks (A)</label>
+        <description>\nExpands B and allows exceeding the recommended cargo capacity at the expense of increased chemfuel consumption.\n\n+600 cargo capacity\n+50% chemfuel consumption per kg carried after (but not before) the recommended cargo capacity of 870 kg\n\n&lt;color=#e60000&gt;Warning:&lt;/color&gt; this upgrade allows the shuttle to be overloaded—fuel consumption will be noticeable at higher loads, so start taking an extra tank worth of chemfuel as cargo. Alternatively, build another shuttle and specialize instead of upgrading to A.</description>
+        <icon>UI/ColonialShuttle_CargoRacksA</icon>
+        <work>2000</work>
+        <gridCoordinate>(17,2)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <prerequisiteNodes>
-          <li>CargoRacks</li>
+          <li>CargoRacksA</li>
         </prerequisiteNodes>
 
         <upgrades>
@@ -285,6 +288,9 @@
             </vehicleStats>
           </li>
         </upgrades>
+        <ingredients>
+          <Steel>30</Steel>
+        </ingredients>
       </li>
       <!-- MARK: Thrusters (C) -->
       <li>
@@ -293,7 +299,7 @@
         <description>\nReplaces B/A. Half of the resources will be refunded.\n\n+150 cargo capacity\n-12.5% chemfuel consumption per kg carried</description>
         <icon>UI/ColonialShuttle_ThrustersC</icon>
         <work>10000</work>
-        <gridCoordinate>(7,2)</gridCoordinate>
+        <gridCoordinate>(7,7)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <replaces>
           <li>ThrustersB</li>
@@ -325,7 +331,7 @@
         <description>\nReplaces C/A. Half of the resources will be refunded.\n\n+260 cargo capacity\n-25% chemfuel consumption per kg carried</description>
         <icon>UI/ColonialShuttle_ThrustersB</icon>
         <work>16000</work>
-        <gridCoordinate>(12,2)</gridCoordinate>
+        <gridCoordinate>(12,7)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <researchPrerequisites>
           <li>Fabrication</li>
@@ -360,7 +366,7 @@
         <description>\nReplaces C/B. Half of the resources will be refunded.\n\n+470 cargo capacity\n-50% chemfuel consumption per kg carried</description>
         <icon>UI/ColonialShuttle_ThrustersA</icon>
         <work>24000</work>
-        <gridCoordinate>(17,2)</gridCoordinate>
+        <gridCoordinate>(17,7)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <researchPrerequisites>
           <li>AdvancedFabrication</li>
@@ -395,7 +401,7 @@
         <description>\nReplaces C/B/A. Half of the resources will be refunded.\n\n+2 passengers\n-175 cargo capacity</description>
         <icon>UI/ColonialShuttle_PassengerCabinD</icon>
         <work>1600</work>
-        <gridCoordinate>(2,7)</gridCoordinate>
+        <gridCoordinate>(2,12)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <replaces>
           <li>PassengerCabinC</li>
@@ -442,7 +448,7 @@
         <description>\nReplaces D/B/A. Half of the resources will be refunded.\n\n+4 passengers\n-350 cargo capacity</description>
         <icon>UI/ColonialShuttle_PassengerCabinC</icon>
         <work>3200</work>
-        <gridCoordinate>(7,7)</gridCoordinate>
+        <gridCoordinate>(7,12)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <replaces>
           <li>PassengerCabinD</li>
@@ -491,7 +497,7 @@
         <description>\nReplaces D/C/A. Half of the resources will be refunded.\n\n+6 passengers\n-525 cargo capacity</description>
         <icon>UI/ColonialShuttle_PassengerCabinB</icon>
         <work>4800</work>
-        <gridCoordinate>(12,7)</gridCoordinate>
+        <gridCoordinate>(12,12)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <replaces>
           <li>PassengerCabinD</li>
@@ -542,7 +548,7 @@
         <description>\nReplaces D/C/B. Half of the resources will be refunded.\n\n+8 passengers\n-700 cargo capacity</description>
         <icon>UI/ColonialShuttle_PassengerCabinA</icon>
         <work>6400</work>
-        <gridCoordinate>(17,7)</gridCoordinate>
+        <gridCoordinate>(17,12)</gridCoordinate>
         <drawSize>(80,80)</drawSize>
         <replaces>
           <li>PassengerCabinD</li>
