@@ -28,15 +28,13 @@
     <!-- Market values (mv) and mass (kg) of individual items are in the comments. -->
     <costList>
       <!-- 9mv / 0.25kg -->
-      <Plasteel>100</Plasteel>
+      <Plasteel>80</Plasteel>
       <!-- 1.9mv / 0.5kg -->
-      <Steel>120</Steel>
-      <!-- 6mv / 1kg -->
-      <Uranium>100</Uranium>
+      <Steel>350</Steel>
       <!-- 32mv / 0.6kg -->
-      <ComponentIndustrial>8</ComponentIndustrial>
+      <ComponentIndustrial>12</ComponentIndustrial>
       <!-- 200mv / 0.6kg -->
-      <ComponentSpacer>1</ComponentSpacer>
+      <ComponentSpacer>2</ComponentSpacer>
     </costList>
     <soundImpactDefault>BulletImpact_Metal</soundImpactDefault>
     <thingToSpawn>ColonialShuttle</thingToSpawn>

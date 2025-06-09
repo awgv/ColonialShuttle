@@ -39,15 +39,12 @@
       <Flammability>0.4</Flammability>
       <!--
         Market value is the total value of ingridients + WorkToBuild × 0.0036.
-        2472 without upgrades. Upgrades only is 400 of work + 5518 of total
-        value / 2 = 2959. We divide upgrades by 2 and add them here, because
-        `MarketValue` can’t be modified by upgrades—I just picked some random
-        middle ground that probably won’t matter much in the end.
+        We’re just using an arbitrary number right now.
       -->
-      <MarketValue>5431</MarketValue>
+      <MarketValue>10000</MarketValue>
     </statBases>
     <vehicleStats>
-      <Mass>1000</Mass>
+      <Mass>45000</Mass>
       <MoveSpeed>0</MoveSpeed>
       <CargoCapacity>150</CargoCapacity>
       <RepairRate>1</RepairRate>
@@ -191,7 +188,7 @@
       <li>
         <key>HullFront</key>
         <label>Hull (front)</label>
-        <health>140</health>
+        <health>100</health>
         <depth>External</depth>
 
         <hitbox>
@@ -205,7 +202,7 @@
       <li>
         <key>HullRear</key>
         <label>Hull (rear)</label>
-        <health>140</health>
+        <health>100</health>
         <depth>External</depth>
 
         <hitbox>
@@ -219,7 +216,7 @@
       <li>
         <key>HullLeft</key>
         <label>Hull (left)</label>
-        <health>140</health>
+        <health>100</health>
         <depth>External</depth>
 
         <hitbox>
@@ -233,7 +230,7 @@
       <li>
         <key>HullRight</key>
         <label>Hull (right)</label>
-        <health>140</health>
+        <health>100</health>
         <depth>External</depth>
 
         <hitbox>
@@ -247,7 +244,7 @@
       <li>
         <key>HullTop</key>
         <label>Hull (top)</label>
-        <health>140</health>
+        <health>100</health>
         <depth>External</depth>
         <hitWeight>10</hitWeight>
 
@@ -423,20 +420,24 @@
             `fuelConsumptionRate`]) is the direct alternative to shuttles; 1kg
             is 0.01513~ of chemfuel per tile or 4.54 of `fuelConsumptionRate`.
 
-          Balacing colonial shuttles around transport pods is a problem: if we
-          set the fuel consumption rate of shuttles to ~5448 or higher, any
-          amount of transport pods below 8 is superior in terms of fuel
+          Balancing colonial shuttles around transport pods is tricky: if we set
+          the fuel consumption rate of shuttles to ~5448 or higher, any amount
+          of transport pods below 8 is superior in terms of fuel
           consumption—there’s just no point in having shuttles; if we set it
           lower, transport pods are obsolete, and one of the design goals for
-          this mod was to keep vanilla balancing unchanged.
+          this mod was to keep vanilla balancing unchanged. 
 
-          `fuelConsumptionRate` had to be dynamic for it to work, so we patch VF
-          with Harmony to add dynamic fuel consumption (when the amount of fuel
-          spent depends on the weight of cargo). `fuelConsumptionRate` set here
-          is completely irrelevant.
+          By default, a shuttle spawns with 150 kg of cargo capacity + 2 seats
+          (95 kg each), so 340 kg of weight on board in total. To calculate the
+          fuel consumption rate:
+
+          1. Find how many pods there’re in some amount of weight; 340 kg / 150
+             kg (a pod) = 2.26~.
+          2. One pod spends 675f; 2.26~ * 675 = 1530.
+          3. Round up/down to work with integers or at the very least tenths.
         -->
-        <fuelConsumptionRate>1012.5</fuelConsumptionRate>
-        <fuelCapacity>260</fuelCapacity>
+        <fuelConsumptionRate>1530</fuelConsumptionRate>
+        <fuelCapacity>750</fuelCapacity>
       </li>
       <li Class="Vehicles.CompProperties_UpgradeTree">
         <def>ColonialShuttle_UpgradeTree</def>
