@@ -1,6 +1,5 @@
 using HarmonyLib;
 using RimWorld;
-using SmashTools;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,46 +8,6 @@ using Verse;
 
 namespace ColonialShuttle
 {
-    // MARK: Defaults
-
-    internal static class Defaults
-    {
-        internal const string colonialShuttleDefName = "ColonialShuttle";
-
-        /// <summary>
-        /// It doesn’t affect the overall “there and back again” fuel consumption directly, i.e. 1.5
-        /// is not a 50% increase, more like ~30%. It was initially 1.5f.
-        /// </summary>
-        internal const float fuelConsumptionRateMultiplier = 1.39f;
-
-        /// <summary>
-        /// Transport pods spend 4.54f per kg.
-        /// </summary>
-        internal const float fuelConsumptionRatePerKilogram = 4.54f * fuelConsumptionRateMultiplier;
-
-        /// <summary>
-        /// Dictionary keys are the keys of upgrade nodes. These are essentially percentages of
-        /// `fuelConsumptionRatePerKilogram`, so make sure that no combination of upgrades allow
-        /// `fuelConsumptionRatePerKilogram` to become <= zero, because it’s going to be reset to
-        /// the default value.
-        /// </summary>
-        internal static Dictionary<string, float> fuelConsumptionRateMultipliersForUpgrades =
-            new Dictionary<string, float>()
-            {
-                { "CargoRacksB", 0.25f },
-                { "CargoRacksA", 0.5f },
-                { "ThrustersC", -0.125f },
-                { "ThrustersB", -0.25f },
-                { "ThrustersA", -0.5f },
-            };
-
-        /// <summary>
-        /// Transport pods spend 2.25 chemfuel per tile or 675f. Used when shuttles carry no or very
-        /// little cargo.
-        /// </summary>
-        internal const float minimumFuelConsumptionRate = 338f;
-    }
-
     // MARK: LauncherDataCached
 
     internal class LauncherDataCached
@@ -63,6 +22,7 @@ namespace ColonialShuttle
     [StaticConstructorOnStartup]
     public static class HarmonyPatcher
     {
+        internal static string colonialShuttleDefName = "ColonialShuttle";
         internal static float chargePerAmmoCountToSetAfterUnloading;
 
         internal static List<LauncherDataCached> cachedDataOfPossibleLaunchers =
@@ -145,7 +105,7 @@ namespace ColonialShuttle
     {
         static void Postfix(CompVehicleTurrets __instance, bool respawningAfterLoad)
         {
-            if (__instance.Vehicle.def.defName != Defaults.colonialShuttleDefName)
+            if (__instance.Vehicle.def.defName != HarmonyPatcher.colonialShuttleDefName)
             {
                 return;
             }
@@ -161,92 +121,6 @@ namespace ColonialShuttle
         }
     }
 
-    // MARK: Dynamic fuel consumption rate
-
-    [HarmonyPatch(
-        typeof(CompVehicleLauncher),
-        nameof(CompVehicleLauncher.CanLaunchWithCargoCapacity)
-    )]
-    class CanLaunchWithCargoCapacityPatch
-    {
-        static bool Postfix(bool __result, ref string disableReason, CompVehicleLauncher __instance)
-        {
-            if (
-                __instance.Vehicle.VehicleDef.defName == Defaults.colonialShuttleDefName
-                && !(
-                    SettingsCache.TryGetValue(
-                        __instance.Vehicle.VehicleDef,
-                        typeof(VehicleDef),
-                        nameof(VehicleDef.vehicleMovementPermissions),
-                        __instance.Vehicle.VehicleDef.vehicleMovementPermissions
-                    ) > VehiclePermissions.NotAllowed
-                )
-            )
-            {
-                float capacity = __instance.Vehicle.GetStatValue(VehicleStatDefOf.CargoCapacity);
-                if (MassUtility.InventoryMass(__instance.Vehicle) > capacity || capacity == 0)
-                {
-                    disableReason = "VF_CannotLaunchOverEncumbered".Translate(
-                        __instance.Vehicle.LabelShort
-                    );
-                    return disableReason.NullOrEmpty();
-                }
-            }
-
-            return __result;
-        }
-    }
-
-    [HarmonyPatch(typeof(CompFueledTravel), "FuelEfficiency", MethodType.Getter)]
-    class FuelEfficiencyPatch
-    {
-        static float Postfix(float __result, CompFueledTravel __instance)
-        {
-            if (__instance.Vehicle.VehicleDef.defName != Defaults.colonialShuttleDefName)
-            {
-                return __result;
-            }
-
-            float fuelConsumptionRatePerKilogramAfterUpgrades =
-                Defaults.fuelConsumptionRatePerKilogram;
-
-            foreach (var node in __instance.Vehicle.CompUpgradeTree.Props.def.nodes)
-            {
-                if (!__instance.Vehicle.CompUpgradeTree.NodeUnlocked(node))
-                {
-                    continue;
-                }
-
-                if (Defaults.fuelConsumptionRateMultipliersForUpgrades.ContainsKey(node.key))
-                {
-                    fuelConsumptionRatePerKilogramAfterUpgrades +=
-                        Defaults.fuelConsumptionRatePerKilogram
-                        * Defaults.fuelConsumptionRateMultipliersForUpgrades[node.key];
-                }
-            }
-
-            if (fuelConsumptionRatePerKilogramAfterUpgrades <= 0)
-            {
-                fuelConsumptionRatePerKilogramAfterUpgrades =
-                    Defaults.fuelConsumptionRatePerKilogram;
-            }
-
-            float totalWeightOfCargoInKilograms = MassUtility.InventoryMass(__instance.Vehicle);
-
-            foreach (var pawn in __instance.Vehicle.AllPawnsAboard)
-            {
-                totalWeightOfCargoInKilograms += pawn.GetStatValue(StatDefOf.Mass);
-            }
-
-            float fuelConsumptionRate =
-                totalWeightOfCargoInKilograms * fuelConsumptionRatePerKilogramAfterUpgrades;
-
-            return fuelConsumptionRate <= Defaults.minimumFuelConsumptionRate
-                ? Defaults.minimumFuelConsumptionRate
-                : fuelConsumptionRate;
-        }
-    }
-
     // MARK: Ammo handling
 
     [HarmonyPatch(typeof(VehicleTurret), nameof(VehicleTurret.SubGizmo_ReloadFromInventory))]
@@ -255,7 +129,7 @@ namespace ColonialShuttle
         static bool Prefix(ref VehicleTurret.SubGizmo __result, VehicleTurret turret)
         {
             if (
-                turret.vehicleDef.defName != Defaults.colonialShuttleDefName
+                turret.vehicleDef.defName != HarmonyPatcher.colonialShuttleDefName
                 || HarmonyPatcher.combatExtendedIsLoaded
             )
             {
@@ -400,7 +274,7 @@ namespace ColonialShuttle
         static void Postfix(VehicleTurret __instance)
         {
             if (
-                __instance.vehicleDef.defName != Defaults.colonialShuttleDefName
+                __instance.vehicleDef.defName != HarmonyPatcher.colonialShuttleDefName
                 || HarmonyPatcher.combatExtendedIsLoaded
             )
             {
@@ -418,7 +292,7 @@ namespace ColonialShuttle
         static bool Prefix(VehicleTurret __instance, bool ignoreTimer)
         {
             if (
-                __instance.vehicleDef.defName != Defaults.colonialShuttleDefName
+                __instance.vehicleDef.defName != HarmonyPatcher.colonialShuttleDefName
                 || HarmonyPatcher.combatExtendedIsLoaded
             )
             {
