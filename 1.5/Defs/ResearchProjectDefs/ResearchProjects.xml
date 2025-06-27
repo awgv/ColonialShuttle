@@ -5,9 +5,9 @@
     <defName>ColonialShuttleResearch</defName>
     <label>powered flight</label>
     <description>Build a variant of an imperial shuttle powered by an internal combustion engine that can quickly transport colonists, items and animals anywhere you like—as long as you have enough chemfuel.</description>
-    <baseCost>1500</baseCost>
-    <techprintCount>1</techprintCount>
-    <techprintCommonality>1</techprintCommonality>
+    <baseCost>6000</baseCost>
+    <techprintCount>2</techprintCount>
+    <techprintCommonality>2</techprintCommonality>
     <techprintMarketValue>4000</techprintMarketValue>
     <heldByFactionCategoryTags>
       <li>Empire</li>
