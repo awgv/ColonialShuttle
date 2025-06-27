@@ -153,7 +153,7 @@
   </Vehicles.VehicleTurretDef>
 
   <!-- MARK: Tox -->
-  <Vehicles.VehicleTurretDef ParentName="ColonialShuttle_GrenadeLauncherBase">
+  <Vehicles.VehicleTurretDef ParentName="ColonialShuttle_GrenadeLauncherBase" MayRequire="Ludeon.RimWorld.Biotech">
     <defName>ColonialShuttle_GrenadeLauncher_Tox</defName>
     <projectile>Bullet_ToxbombLauncher</projectile>
     <chargePerAmmoCount>15</chargePerAmmoCount>
